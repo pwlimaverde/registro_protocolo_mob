@@ -1,5 +1,5 @@
 name: dependencies_module
-description: A new Flutter package project.
+description: Modulo responsável pelo gerenciamento das dependencias.
 publish_to: 'none'
 version: 0.0.1
 homepage:
