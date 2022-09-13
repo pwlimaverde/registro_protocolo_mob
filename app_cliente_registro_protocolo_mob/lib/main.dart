@@ -1,9 +1,31 @@
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  runApp(const AnimacaoInicial());
   initServices();
+  await Future.delayed(const Duration(milliseconds: 1200));
   runApp(const MyApp());
+}
+
+class AnimacaoInicial extends StatelessWidget {
+  const AnimacaoInicial({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: Container(
+        color: Colors.grey,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
