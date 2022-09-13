@@ -1,12 +1,8 @@
-import 'package:app_cliente_registro_protocolo_mob/firebase_options.dart';
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
+  initServices();
   runApp(const MyApp());
 }
 

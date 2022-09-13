@@ -7,6 +7,9 @@ export 'package:firebase_storage/firebase_storage.dart';
 export 'package:cloud_firestore/cloud_firestore.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:firebase_remote_config/firebase_remote_config.dart';
+export 'package:get/get.dart';
+export 'package:get_storage/get_storage.dart';
+export 'package:intl/intl.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 ///Modulos
