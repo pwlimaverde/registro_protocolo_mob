@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "core_module",
+            "name": "app_cliente_registro_protocolo_mob",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "core_module (profile mode)",
+            "name": "app_cliente_registro_protocolo_mob (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "core_module (release mode)",
+            "name": "app_cliente_registro_protocolo_mob (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

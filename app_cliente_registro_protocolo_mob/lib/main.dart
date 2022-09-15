@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 void main() async {
   runApp(const AnimacaoInicial());
   initServices();
-  await Future.delayed(const Duration(milliseconds: 1200));
+  await Future.delayed(const Duration(milliseconds: 1000));
   runApp(const MyApp());
 }
 
