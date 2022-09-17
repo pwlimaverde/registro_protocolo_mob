@@ -7,9 +7,9 @@ class CoreModuleBindings implements Bindings {
       CoreModuleController(),
       permanent: true,
     );
-    // Get.put<DesignSystemController>(
-    //   DesignSystemController(),
-    //   permanent: true,
-    // );
+    Get.put<DesignSystemController>(
+      DesignSystemController(),
+      permanent: true,
+    );
   }
 }

@@ -38,7 +38,8 @@ class MyApp extends StatelessWidget {
       title: 'Sistema Registro de Protocolos MOB',
       initialBinding: CoreModuleBindings(),
       getPages: [
-        ...SplashModule().routers,
+        // ...SplashModule().routers,
+        ...UploadCsvModule().routers,
         // ...HomeModule().routers,
       ],
       theme: ThemeData(

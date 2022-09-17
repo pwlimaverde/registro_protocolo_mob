@@ -11,6 +11,7 @@ export 'package:get/get.dart';
 export 'package:get_storage/get_storage.dart';
 export 'package:intl/intl.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
+export 'package:csv/csv.dart';
 
 ///Modulos
 export 'package:design_system_module/design_system_module.dart';
@@ -18,3 +19,7 @@ export 'package:core_module/core_module.dart';
 export 'package:splash_module/splash_module.dart';
 export 'package:login_module/login_module.dart';
 export 'package:home_module/home_module.dart';
+export 'package:upload_csv_module/upload_csv_module.dart';
+
+///Pacakages Internos
+export 'package:decoder_upload_csv_web_package/decoder_upload_csv_web_package.dart';

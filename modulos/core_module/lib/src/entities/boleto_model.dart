@@ -2,52 +2,52 @@ import 'dart:convert';
 
 class BoletoModel {
   final int idCliente;
-  final String cliente;
-  final int documento;
+  final String? cliente;
+  final String? documento;
   final String? email;
   final String? telefoneFixo;
   final String? telefoneMovel;
   final int idContrato;
-  final String dataHabilitacaoContrato;
-  final String numeroDeBoleto;
-  final String formaDeCobranca;
-  final String dataVencimentoFatura;
-  final int valorFatura;
-  final String dataEmissaoFatura;
+  final String? dataHabilitacaoContrato;
+  final String? numeroDeBoleto;
+  final String? formaDeCobranca;
+  final String? dataVencimentoFatura;
+  final String? valorFatura;
+  final String? dataEmissaoFatura;
   final String? arquivo;
   final String? dataImpressaoFatura;
-  final String uf;
-  final String cidade;
-  final String bairro;
-  final String tipoLogradouro;
-  final String logradouro;
-  final int numero;
-  final int? cep;
+  final String? uf;
+  final String? cidade;
+  final String? bairro;
+  final String? tipoLogradouro;
+  final String? logradouro;
+  final String? numero;
+  final String? cep;
   final String? solicitanteDaGeracao;
-  final String idFatura;
+  final int idFatura;
   final String? referencia;
   BoletoModel({
     required this.idCliente,
-    required this.cliente,
-    required this.documento,
+    this.cliente,
+    this.documento,
     this.email,
     this.telefoneFixo,
     this.telefoneMovel,
     required this.idContrato,
-    required this.dataHabilitacaoContrato,
-    required this.numeroDeBoleto,
-    required this.formaDeCobranca,
-    required this.dataVencimentoFatura,
-    required this.valorFatura,
-    required this.dataEmissaoFatura,
+    this.dataHabilitacaoContrato,
+    this.numeroDeBoleto,
+    this.formaDeCobranca,
+    this.dataVencimentoFatura,
+    this.valorFatura,
+    this.dataEmissaoFatura,
     this.arquivo,
     this.dataImpressaoFatura,
-    required this.uf,
-    required this.cidade,
-    required this.bairro,
-    required this.tipoLogradouro,
-    required this.logradouro,
-    required this.numero,
+    this.uf,
+    this.cidade,
+    this.bairro,
+    this.tipoLogradouro,
+    this.logradouro,
+    this.numero,
     this.cep,
     this.solicitanteDaGeracao,
     required this.idFatura,
@@ -84,33 +84,33 @@ class BoletoModel {
     };
   }
 
-  factory BoletoModel.fromMap(Map<String, dynamic> map) {
+  factory BoletoModel.fromMap(Map<String, String> map) {
     return BoletoModel(
-      idCliente: map['idCliente']?.toInt() ?? 0,
-      cliente: map['cliente'] ?? '',
-      documento: map['documento']?.toInt() ?? 0,
-      email: map['email'],
-      telefoneFixo: map['telefoneFixo'],
-      telefoneMovel: map['telefoneMovel'],
-      idContrato: map['idContrato']?.toInt() ?? 0,
-      dataHabilitacaoContrato: map['dataHabilitacaoContrato'] ?? '',
-      numeroDeBoleto: map['numeroDeBoleto'] ?? '',
-      formaDeCobranca: map['formaDeCobranca'] ?? '',
-      dataVencimentoFatura: map['dataVencimentoFatura'] ?? '',
-      valorFatura: map['valorFatura']?.toInt() ?? 0,
-      dataEmissaoFatura: map['dataEmissaoFatura'] ?? '',
-      arquivo: map['arquivo'],
-      dataImpressaoFatura: map['dataImpressaoFatura'],
-      uf: map['uf'] ?? '',
-      cidade: map['cidade'] ?? '',
-      bairro: map['bairro'] ?? '',
-      tipoLogradouro: map['tipoLogradouro'] ?? '',
-      logradouro: map['logradouro'] ?? '',
-      numero: map['numero']?.toInt() ?? 0,
-      cep: map['cep']?.toInt(),
-      solicitanteDaGeracao: map['solicitanteDaGeracao'],
-      idFatura: map['idFatura'] ?? '',
-      referencia: map['referencia'],
+      idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
+      cliente: map['Cliente'] ?? '',
+      documento: map['Documento'] ?? '',
+      email: map['Email'] ?? '',
+      telefoneFixo: map['Telefone Fixo'] ?? '',
+      telefoneMovel: map['Telefone Movel'] ?? '',
+      idContrato: int.tryParse(map['ID Contrato'].toString()) ?? 0,
+      dataHabilitacaoContrato: map['Data Habilitacao contrato'] ?? '',
+      numeroDeBoleto: map['Número de Boleto'] ?? '',
+      formaDeCobranca: map['Forma de Cobrança'] ?? '',
+      dataVencimentoFatura: map['Data Vencimento Fatura'] ?? '',
+      valorFatura: map['Valor Fatura'] ?? '',
+      dataEmissaoFatura: map['Data Emissao Fatura'] ?? '',
+      arquivo: map['Arquivo'] ?? '',
+      dataImpressaoFatura: map['Data Impressão Fatura'] ?? '',
+      uf: map['UF'] ?? '',
+      cidade: map['Cidade'] ?? '',
+      bairro: map['Bairro'] ?? '',
+      tipoLogradouro: map['Tipo Logradouro'] ?? '',
+      logradouro: map['Logradouro'] ?? '',
+      numero: map['Numero'] ?? 's/n',
+      cep: map['CEP'] ?? '',
+      solicitanteDaGeracao: map['Solicitante da Geração'] ?? '',
+      idFatura: int.tryParse(map['ID Fatura'].toString()) ?? 0,
+      referencia: map['Referencia'] ?? '',
     );
   }
 

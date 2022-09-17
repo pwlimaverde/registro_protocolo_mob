@@ -23,6 +23,7 @@ dependencies:
   get_storage: ^2.0.3
   intl: ^0.17.0
   font_awesome_flutter: ^10.2.1
+  csv: ^5.0.1
 
   # Modulos
   design_system_module:
@@ -35,6 +36,13 @@ dependencies:
     path: ../login_module
   home_module:
     path: ../home_module
+  upload_csv_module:
+    path: ../upload_csv_module
+
+  # Package
+  decoder_upload_csv_web_package:
+    path: ../../packages/decoder_upload_csv_web_package
+  
 
 dev_dependencies:
   flutter_test:

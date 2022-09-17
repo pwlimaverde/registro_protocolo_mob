@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   dependencies_module:
     path: ../dependencies_module
+  pdf: ^3.8.3
+  printing: ^5.9.3
 
 dev_dependencies:
   flutter_test:
