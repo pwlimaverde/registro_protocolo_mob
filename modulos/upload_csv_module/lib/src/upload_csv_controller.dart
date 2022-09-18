@@ -6,13 +6,11 @@ import 'utils/errors/erros_upload_csv.dart';
 
 class UploadCsvController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final CarregarCsvUsecase carregarCsvUsecase;
-  final ProcessarCsvUsecase processarCsvUsecase;
   final UploadBoletoUsecase uploadOpsUsecase;
+  final CarregarCsvPresenter carregarCsvPresenter;
   UploadCsvController({
-    required this.carregarCsvUsecase,
-    required this.processarCsvUsecase,
     required this.uploadOpsUsecase,
+    required this.carregarCsvPresenter,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -65,92 +63,49 @@ class UploadCsvController extends GetxController
 
   Future<void> setUploadOps() async {
     _clearLists();
-    await _processarRemessa(listaCsv: await _carregarCsv());
-  }
-
-  Future<List<List<dynamic>>?> _carregarCsv() async {
-    final stringList = await carregarCsvUsecase(
-      parameters: NoParams(
-        error: ErroUploadCsv(
-          message: 'Erro ao carregar o arquivo CSV',
-        ),
-        showRuntimeMilliseconds: false,
-        nameFeature: "Upload Csv",
-      ),
-    );
-
-    if (stringList.status == StatusResult.success) {
-      return stringList.result;
-    } else {
-      coreModuleController.message(
-        MessageModel.error(
-          title: 'Carregamento de arquivo CVS',
-          message: 'Erro ao carregar o arquivo - ${stringList.result})}',
-        ),
-      );
-      return null;
-    }
-  }
-
-  Future<RemessaModel?> _processarRemessa({
-    required List<List<dynamic>>? listaCsv,
-  }) async {
-    final ressaProcessada = listaCsv != null
-        ? await processarCsvUsecase(
-            parameters: ParametrosProcessarCsvEmRemessa(
-              listaBruta: listaCsv,
-              nameFeature: "Processamento Csv",
-              showRuntimeMilliseconds: true,
-              error: ErroProcessamentoCsv(
-                message: 'Erro ao processar o arquivo CSV',
-              ),
+    final teste = await carregarCsvPresenter(
+        parameters: NoParams(
+            error: ErroUploadCsv(
+              message: "Erro ao fazer o upload do arquivo",
             ),
-          )
-        : null;
-
-    if (ressaProcessada != null &&
-        ressaProcessada.status == StatusResult.success) {
-      print("========");
-      print(ressaProcessada.result);
-      print("========");
-      return ressaProcessada.result;
-    } else {
-      return null;
-    }
-    // if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
-    //   final listOps = opsProcessadas.result["listOps"] ?? [];
-    //   final listOpsError = opsProcessadas.result["listOpsError"] ?? [];
-    //   coreModuleController.message(
-    //     MessageModel.info(
-    //       title: "Processamento de OPS",
-    //       message:
-    //           "${listOps.length} Processadas com Sucesso! \n ${listOpsError.length} Processadas com Erro!",
-    //     ),
-    //   );
-    //   if (listOpsError.isNotEmpty) {
-    //     uploadCsvOpsListError(listOpsError);
-    //   }
-    //   if (listOps.isNotEmpty) {
-    //     return listOps;
-    //   } else {
-    //     coreModuleController.message(
-    //       MessageModel.error(
-    //         title: 'Processamento de OPS',
-    //         message: 'Erro! nenhuma OP a ser processada!',
-    //       ),
-    //     );
-    //     return null;
-    //   }
-    // } else {
-    //   coreModuleController.message(
-    //     MessageModel.error(
-    //       title: 'Processamento de OPS',
-    //       message: 'Erro ao processar as OPS!',
-    //     ),
-    //   );
-    //   return null;
+            showRuntimeMilliseconds: false,
+            nameFeature: "UploadCsv"));
+    print(teste.status);
+    print(teste.result);
   }
-}
+
+  // if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
+  //   final listOps = opsProcessadas.result["listOps"] ?? [];
+  //   final listOpsError = opsProcessadas.result["listOpsError"] ?? [];
+  //   coreModuleController.message(
+  //     MessageModel.info(
+  //       title: "Processamento de OPS",
+  //       message:
+  //           "${listOps.length} Processadas com Sucesso! \n ${listOpsError.length} Processadas com Erro!",
+  //     ),
+  //   );
+  //   if (listOpsError.isNotEmpty) {
+  //     uploadCsvOpsListError(listOpsError);
+  //   }
+  //   if (listOps.isNotEmpty) {
+  //     return listOps;
+  //   } else {
+  //     coreModuleController.message(
+  //       MessageModel.error(
+  //         title: 'Processamento de OPS',
+  //         message: 'Erro! nenhuma OP a ser processada!',
+  //       ),
+  //     );
+  //     return null;
+  //   }
+  // } else {
+  //   coreModuleController.message(
+  //     MessageModel.error(
+  //       title: 'Processamento de OPS',
+  //       message: 'Erro ao processar as OPS!',
+  //     ),
+  //   );
+  //   return null;
 
   // Future<Map<String, List<OpsModel>>?> _triagemOps({
   //   required List<OpsModel>? listaOps,
@@ -177,7 +132,6 @@ class UploadCsvController extends GetxController
   //     );
   //     return null;
   //   }
-
 
   // Future<void> _uploadOps({
   //   required Map<String, List<OpsModel>>? triagemOps,
@@ -287,3 +241,4 @@ class UploadCsvController extends GetxController
   //   return model;
   // }
 // }
+}

@@ -8,3 +8,6 @@ const double menuWidth = 200;
 const double hederHeight = 60;
 const double tabHeight = 40;
 const String versaoAtual = "0.0.1";
+final DateFormat dataFormatoDDMMYYYY = DateFormat('dd/MM/yyyy');
+final DateFormat dataFormatoYYYYMMDD = DateFormat('yyyy/MM/dd');
+final NumberFormat numMilhar = NumberFormat(",##0", "pt_BR");

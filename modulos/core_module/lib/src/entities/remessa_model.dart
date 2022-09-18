@@ -4,7 +4,7 @@ import '../../core_module.dart';
 
 class RemessaModel {
   final String nomeArquivo;
-  final String data;
+  final DateTime data;
   final List<BoletoModel> remessa;
   final int quantidadeProtocolos;
   RemessaModel({
@@ -13,10 +13,22 @@ class RemessaModel {
     required this.remessa,
   }) : quantidadeProtocolos = remessa.length;
 
+  RemessaModel copyWith({
+    String? nomeArquivo,
+    DateTime? data,
+    List<BoletoModel>? remessa,
+  }) {
+    return RemessaModel(
+      nomeArquivo: nomeArquivo ?? this.nomeArquivo,
+      data: data ?? this.data,
+      remessa: remessa ?? this.remessa,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'nomeArquivo': nomeArquivo,
-      'data': data,
+      'data': data.millisecondsSinceEpoch,
       'remessa': remessa.map((x) => x.toMap()).toList(),
     };
   }
@@ -24,7 +36,7 @@ class RemessaModel {
   factory RemessaModel.fromMap(Map<String, dynamic> map) {
     return RemessaModel(
       nomeArquivo: map['nomeArquivo'] ?? '',
-      data: map['data'] ?? '',
+      data: DateTime.fromMillisecondsSinceEpoch(map['data']),
       remessa: List<BoletoModel>.from(
           map['remessa']?.map((x) => BoletoModel.fromMap(x))),
     );
@@ -37,7 +49,7 @@ class RemessaModel {
 
   @override
   String toString() =>
-      'RemessaModel(nomeArquivo: $nomeArquivo, data: $data, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
+      'RemessaModel(nomeArquivo: $nomeArquivo, data: ${dataFormatoDDMMYYYY.format(data)}, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
 
   @override
   bool operator ==(Object other) {
