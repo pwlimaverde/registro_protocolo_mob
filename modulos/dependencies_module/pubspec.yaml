@@ -11,19 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  # Externos
-  return_success_or_error: ^0.4.2
-  firebase_core: ^1.22.0
-  firebase_storage: ^10.3.8
-  cloud_firestore: ^3.4.7
-  firebase_auth: ^3.8.0
-  firebase_remote_config: ^2.0.17
-  get: ^4.6.5
-  get_storage: ^2.0.3
-  intl: ^0.17.0
-  font_awesome_flutter: ^10.2.1
-  csv: ^5.0.1
 
   # Modulos
   design_system_module:
@@ -42,6 +29,20 @@ dependencies:
   # Package
   decoder_upload_csv_web_package:
     path: ../../packages/decoder_upload_csv_web_package
+
+  # Externos
+  return_success_or_error: ^0.4.2
+  firebase_core: ^1.22.0
+  firebase_storage: ^10.3.8
+  cloud_firestore: ^3.4.7
+  firebase_auth: ^3.8.0
+  firebase_remote_config: ^2.0.17
+  get: ^4.6.5
+  get_storage: ^2.0.3
+  intl: ^0.17.0
+  font_awesome_flutter: ^10.2.1
+  csv: ^5.0.1
+  spreadsheet_decoder: ^2.1.0
   
 
 dev_dependencies:

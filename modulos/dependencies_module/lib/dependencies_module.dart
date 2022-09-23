@@ -12,6 +12,7 @@ export 'package:get_storage/get_storage.dart';
 export 'package:intl/intl.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:csv/csv.dart';
+export 'package:spreadsheet_decoder/spreadsheet_decoder.dart';
 
 ///Modulos
 export 'package:design_system_module/design_system_module.dart';

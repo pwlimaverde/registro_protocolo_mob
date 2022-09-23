@@ -7,10 +7,12 @@ import 'utils/errors/erros_upload_csv.dart';
 class UploadCsvController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final UploadBoletoUsecase uploadOpsUsecase;
-  final CarregarCsvPresenter carregarCsvPresenter;
+  final CarregarXlsxPresenter carregarXlsxPresenter;
+  final CarregarArquivoPresenter carregarArquivoPresenter;
   UploadCsvController({
     required this.uploadOpsUsecase,
-    required this.carregarCsvPresenter,
+    required this.carregarXlsxPresenter,
+    required this.carregarArquivoPresenter,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -63,7 +65,7 @@ class UploadCsvController extends GetxController
 
   Future<void> setUploadOps() async {
     _clearLists();
-    final teste = await carregarCsvPresenter(
+    final teste = await carregarArquivoPresenter(
         parameters: NoParams(
             error: ErroUploadCsv(
               message: "Erro ao fazer o upload do arquivo",
@@ -71,7 +73,7 @@ class UploadCsvController extends GetxController
             showRuntimeMilliseconds: false,
             nameFeature: "UploadCsv"));
     print(teste.status);
-    print(teste.result);
+    // print(teste.result);
   }
 
   // if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {

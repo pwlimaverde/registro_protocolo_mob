@@ -1,16 +1,17 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
-import '../../../utils/parametros/parametos.dart';
+import '../../../../utils/parametros/parametos.dart';
 
 class ProcessarCsvEmOpsDatasource implements Datasource<RemessaModel> {
   @override
   Future<RemessaModel> call(
       {required ParametersReturnResult parameters}) async {
     try {
-      if (parameters is ParametrosProcessarCsvEmRemessa) {
+      if (parameters is ParametrosProcessarRemessa) {
         final DateTime dataProcessada = DateTime.parse(
           "${parameters.listaBruta[1].last.substring(6, 10)}-${parameters.listaBruta[1].last.substring(3, 5)}-${parameters.listaBruta[1].last.substring(0, 2)}",
         );
+
         final remessa = RemessaModel(
           nomeArquivo: parameters.listaBruta[0][0],
           data: dataProcessada,

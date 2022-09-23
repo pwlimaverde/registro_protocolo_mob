@@ -1,17 +1,17 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
-import '../features/arquivos_csv/carregar_csv/datasources/upload_csv_html_datasource.dart';
-import '../features/arquivos_csv/carregar_csv/domain/usecase/carregar_csv_usecase.dart';
-import '../features/arquivos_csv/processar_csv/datasources/processar_csv_em_remessa_datasource.dart';
-import '../features/arquivos_csv/processar_csv/domain/usecase/processar_csv_usecase.dart';
+import '../features/arquivos_Xlsx/carregar_Xlsx/datasources/upload_Xlsx_html_datasource.dart';
+import '../features/arquivos_Xlsx/carregar_Xlsx/domain/usecase/carregar_Xlsx_usecase.dart';
+import '../features/arquivos_Xlsx/processar_Xlsx/datasources/processar_Xlsx_em_remessa_datasource.dart';
+import '../features/arquivos_Xlsx/processar_Xlsx/domain/usecase/processar_Xlsx_usecase.dart';
 import '../utils/parametros/parametos.dart';
 
-class CarregarCsvPresenter implements Presenter {
+class CarregarXlsxPresenter implements Presenter {
   @override
   Future<ReturnSuccessOrError> call(
       {required ParametersReturnResult parameters}) async {
     final remessa = await _processarRemessa(
-      listaCsv: await _carregarCsv(
+      listaXlsx: await _carregarXlsx(
         parameters: parameters,
       ),
       parameters: parameters,
@@ -20,10 +20,10 @@ class CarregarCsvPresenter implements Presenter {
     return remessa;
   }
 
-  Future<List<List<dynamic>>> _carregarCsv(
+  Future<List<List<dynamic>>> _carregarXlsx(
       {required ParametersReturnResult parameters}) async {
-    final stringList = await CarregarCsvUsecase(
-      datasource: UploadCsvHtmlDatasource(),
+    final stringList = await CarregarXlsxUsecase(
+      datasource: UploadXlsxHtmlDatasource(),
     )(
       parameters: parameters,
     );
@@ -36,18 +36,18 @@ class CarregarCsvPresenter implements Presenter {
   }
 
   Future<ReturnSuccessOrError<RemessaModel>> _processarRemessa({
-    required List<List<dynamic>> listaCsv,
+    required List<List<dynamic>> listaXlsx,
     required ParametersReturnResult parameters,
   }) async {
-    final ressaProcessada = await ProcessarCsvUsecase(
-      datasource: ProcessarCsvEmOpsDatasource(),
+    final remessaProcessada = await ProcessarXlsxUsecase(
+      datasource: ProcessarXlsxEmOpsDatasource(),
     )(
         parameters: ParametrosProcessarRemessa(
-      listaBruta: listaCsv,
+      listaBruta: listaXlsx,
       nameFeature: parameters.nameFeature,
       showRuntimeMilliseconds: parameters.showRuntimeMilliseconds,
       error: parameters.error,
     ));
-    return ressaProcessada;
+    return remessaProcessada;
   }
 }
