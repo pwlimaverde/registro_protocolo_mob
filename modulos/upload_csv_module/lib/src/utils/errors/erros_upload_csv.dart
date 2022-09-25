@@ -38,3 +38,16 @@ class ErroUploadBoleto implements AppError {
     return "ErroUploadBoleto - $message";
   }
 }
+
+class ErroUploadArquivo implements AppError {
+  @override
+  String message;
+  ErroUploadArquivo({
+    required this.message,
+  });
+
+  @override
+  String toString() {
+    return "ErroUploadCsv - $message";
+  }
+}

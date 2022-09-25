@@ -1,16 +1,20 @@
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
 
+import 'features/mapeamento_dados_arquivo_html/domain/usecase/mapeamento_dados_arquivo_html_usecase.dart';
 import 'features/upload_ops/domain/usecase/upload_boleto_usecase.dart';
 import 'utils/errors/erros_upload_csv.dart';
+import 'utils/parametros/parametros_upload_csv_module.dart';
 
 class UploadCsvController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final UploadBoletoUsecase uploadOpsUsecase;
-  final CarregarArquivoPresenter carregarArquivoPresenter;
+  final MapeamentoDadosArquivoHtmlUsecase mapeamentoDadosArquivoHtmlUsecase;
+  final UploadArquivoHtmlPresenter uploadArquivoHtmlPresenter;
   UploadCsvController({
     required this.uploadOpsUsecase,
-    required this.carregarArquivoPresenter,
+    required this.mapeamentoDadosArquivoHtmlUsecase,
+    required this.uploadArquivoHtmlPresenter,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -63,15 +67,24 @@ class UploadCsvController extends GetxController
 
   Future<void> setUploadOps() async {
     _clearLists();
-    final teste = await carregarArquivoPresenter(
-        parameters: NoParams(
-            error: ErroUploadCsv(
-              message: "Erro ao fazer o upload do arquivo",
-            ),
-            showRuntimeMilliseconds: false,
-            nameFeature: "UploadCsv"));
-    print(teste.status);
-    // print(teste.result);
+    final arquivos = await uploadArquivoHtmlPresenter(
+      parameters: NoParams(
+          error:
+              ErroUploadArquivo(message: "Erro ao fazer o upload do arquivo."),
+          showRuntimeMilliseconds: true,
+          nameFeature: "Carregamento de Arquivo"),
+    );
+    final teste = await mapeamentoDadosArquivoHtmlUsecase(
+      parameters: ParametrosMapeamentoArquivoHtml(
+        error: ErroUploadArquivo(message: "Erro ao fazer o upload do arquivo."),
+        nameFeature: 'Upload Arquivo Html',
+        showRuntimeMilliseconds: true,
+        listaMapBytes: arquivos.result,
+      ),
+    );
+    print(arquivos.status);
+
+    print(teste.result);
   }
 
   // if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
