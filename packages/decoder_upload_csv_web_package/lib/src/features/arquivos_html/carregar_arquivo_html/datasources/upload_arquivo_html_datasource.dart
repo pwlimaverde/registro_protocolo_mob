@@ -10,7 +10,7 @@ class UploadArquivoHtmlDatasource implements Datasource<List<html.File>> {
     uploadInput.multiple = true;
     uploadInput.click();
 
-    final testeElement = await uploadInput.onChange.first.then((_) async {
+    final result = await uploadInput.onChange.first.then((_) async {
       List<html.File>? files = uploadInput.files;
 
       if (files != null && files.isNotEmpty) {
@@ -19,6 +19,6 @@ class UploadArquivoHtmlDatasource implements Datasource<List<html.File>> {
         throw Exception("Erro ao carregar arquivo");
       }
     });
-    return testeElement;
+    return result;
   }
 }
