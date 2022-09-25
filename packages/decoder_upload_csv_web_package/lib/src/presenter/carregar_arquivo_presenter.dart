@@ -1,11 +1,11 @@
 import 'package:dependencies_module/dependencies_module.dart';
-import 'package:flutter/foundation.dart';
 import '../features/arquivos_html/carregar_arquivo_html/datasources/upload_arquivo_html_datasource.dart';
 import '../features/arquivos_html/carregar_arquivo_html/domain/usecase/carregar_arquivo_html_usecase.dart';
 import '../features/arquivos_html/leitura_arquivo_html/datasources/leitura_arquivo_html_datasource.dart';
 import '../features/arquivos_html/leitura_arquivo_html/domain/usecase/leitura_arquivo_html_usecase.dart';
 import '../features/arquivos_html/mapeamento_dados_arquivo_html/datasources/mapeamento_dados_arquivo_html_datasource.dart';
 import '../features/arquivos_html/mapeamento_dados_arquivo_html/domain/usecase/mapeamento_dados_arquivo_html_usecase.dart';
+import '../utils/errors/erros_decoder_upload_csv_web.dart';
 import '../utils/parametros/parametos.dart';
 
 // ignore: avoid_web_libraries_in_flutter
@@ -17,13 +17,7 @@ class CarregarArquivoPresenter
   Future<ReturnSuccessOrError<List<Map<String, dynamic>>>> call(
       {required ParametersReturnResult parameters}) async {
     final remessa = _mapeamentoArquivo(
-        listaMapBytes: await _leituraArquivo(
-          listaArquivosHtml: await _carregarArquivo(
-            parameters: parameters,
-          ),
-          parameters: parameters,
-        ),
-        parameters: parameters);
+        listaMapBytes: await _uploadArquivo(), parameters: parameters);
 
     return remessa;
   }
@@ -59,6 +53,19 @@ class CarregarArquivoPresenter
     ));
     if (leitura.status == StatusResult.success) {
       return leitura.result;
+    } else {
+      throw Exception("Erro ao carregar arquivo");
+    }
+  }
+
+  Future<List<Map<String, Uint8List>>> _uploadArquivo() async {
+    final upload = await UploadArquivoHtmlPresenter()(
+        parameters: NoParams(
+            error: ErroDecoderUploadCsvWeb(message: 'Teste erro'),
+            showRuntimeMilliseconds: true,
+            nameFeature: "teste upload"));
+    if (upload.status == StatusResult.success) {
+      return upload.result;
     } else {
       throw Exception("Erro ao carregar arquivo");
     }

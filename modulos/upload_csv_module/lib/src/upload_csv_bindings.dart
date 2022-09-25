@@ -10,7 +10,6 @@ class UploadCsvBiding implements Bindings {
         uploadOpsUsecase: UploadBoletoUsecase(
           datasource: UploadOpsDatasource(),
         ),
-        carregarXlsxPresenter: CarregarXlsxPresenter(),
         carregarArquivoPresenter: CarregarArquivoPresenter(),
       );
     });

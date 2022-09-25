@@ -7,11 +7,9 @@ import 'utils/errors/erros_upload_csv.dart';
 class UploadCsvController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final UploadBoletoUsecase uploadOpsUsecase;
-  final CarregarXlsxPresenter carregarXlsxPresenter;
   final CarregarArquivoPresenter carregarArquivoPresenter;
   UploadCsvController({
     required this.uploadOpsUsecase,
-    required this.carregarXlsxPresenter,
     required this.carregarArquivoPresenter,
   });
 
