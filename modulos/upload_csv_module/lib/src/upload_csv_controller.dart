@@ -2,6 +2,7 @@ import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
 
 import 'features/mapeamento_dados_arquivo_html/domain/usecase/mapeamento_dados_arquivo_html_usecase.dart';
+import 'features/processamento_dados_arquivo_html/domain/usecase/processamento_dados_arquivo_html_usecase.dart';
 import 'features/upload_ops/domain/usecase/upload_boleto_usecase.dart';
 import 'utils/errors/erros_upload_csv.dart';
 import 'utils/parametros/parametros_upload_csv_module.dart';
@@ -10,11 +11,14 @@ class UploadCsvController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final UploadBoletoUsecase uploadOpsUsecase;
   final MapeamentoDadosArquivoHtmlUsecase mapeamentoDadosArquivoHtmlUsecase;
+  final ProcessamentoDadosArquivoHtmlUsecase
+      processamentoDadosArquivoHtmlUsecase;
   final UploadArquivoHtmlPresenter uploadArquivoHtmlPresenter;
   UploadCsvController({
     required this.uploadOpsUsecase,
     required this.mapeamentoDadosArquivoHtmlUsecase,
     required this.uploadArquivoHtmlPresenter,
+    required this.processamentoDadosArquivoHtmlUsecase,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -82,9 +86,20 @@ class UploadCsvController extends GetxController
         listaMapBytes: arquivos.result,
       ),
     );
-    print(arquivos.status);
 
-    print(teste.result);
+    if (teste.status == StatusResult.success) {
+      final testeProcessamento = await processamentoDadosArquivoHtmlUsecase(
+        parameters: ParametrosProcessamentoArquivoHtml(
+          error: ErroProcessamentoCsv(message: "Erro ao processar Arquivo"),
+          nameFeature: 'Teste Processamento',
+          listaMapBruta: teste.result,
+          showRuntimeMilliseconds: true,
+        ),
+      );
+      // print(testeProcessamento.status);
+
+      // print(testeProcessamento.result);
+    }
   }
 
   // if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {

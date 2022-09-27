@@ -27,8 +27,6 @@ dependencies:
     path: ../upload_csv_module
 
   # Package
-  decoder_upload_csv_web_package:
-    path: ../../packages/decoder_upload_csv_web_package
   upload_arquivo_html_package:
     path: ../../packages/upload_arquivo_html_package
 

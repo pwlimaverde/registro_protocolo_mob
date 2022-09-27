@@ -84,7 +84,9 @@ class BoletoModel {
     };
   }
 
-  factory BoletoModel.fromMap(Map<String, String> map) {
+  factory BoletoModel.fromMap(Map<String, dynamic> map) {
+    print("#### model ###");
+    print(map['ID Cliente'].runtimeType);
     return BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',

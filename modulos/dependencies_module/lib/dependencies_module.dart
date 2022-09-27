@@ -23,7 +23,6 @@ export 'package:home_module/home_module.dart';
 export 'package:upload_csv_module/upload_csv_module.dart';
 
 ///Pacakages Internos
-export 'package:decoder_upload_csv_web_package/decoder_upload_csv_web_package.dart';
 export 'package:upload_arquivo_html_package/upload_arquivo_html_package.dart';
 
 ///Packages Dart

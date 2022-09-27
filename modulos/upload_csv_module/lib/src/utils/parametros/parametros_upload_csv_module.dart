@@ -33,3 +33,20 @@ class ParametrosMapeamentoArquivoHtml implements ParametersReturnResult {
     required this.nameFeature,
   });
 }
+
+class ParametrosProcessamentoArquivoHtml implements ParametersReturnResult {
+  final List<Map<String, List<Map<String, dynamic>>>> listaMapBruta;
+  @override
+  final AppError error;
+  @override
+  final bool showRuntimeMilliseconds;
+  @override
+  final String nameFeature;
+
+  ParametrosProcessamentoArquivoHtml({
+    required this.listaMapBruta,
+    required this.error,
+    required this.showRuntimeMilliseconds,
+    required this.nameFeature,
+  });
+}

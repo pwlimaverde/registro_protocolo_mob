@@ -4,19 +4,22 @@ import 'dart:convert' as convert;
 import '../../../utils/parametros/parametros_upload_csv_module.dart';
 
 class MapeamentoDadosArquivoHtmlDatasource
-    implements Datasource<List<Map<String, dynamic>>> {
+    implements Datasource<List<Map<String, List<Map<String, dynamic>>>>> {
   @override
-  Future<List<Map<String, dynamic>>> call(
+  Future<List<Map<String, List<Map<String, dynamic>>>>> call(
       {required ParametersReturnResult parameters}) async {
     if (parameters is ParametrosMapeamentoArquivoHtml) {
       List<Map<String, Uint8List>> mapBytes = parameters.listaMapBytes;
 
       if (mapBytes.isNotEmpty) {
-        List<Map<String, dynamic>> listaGeral = [];
+        List<Map<String, List<Map<String, dynamic>>>> listaArquivos = [];
         for (Map<String, Uint8List> map in mapBytes) {
-          listaGeral.addAll(_listaProcessada(map: map));
+          final Map<String, List<Map<String, dynamic>>> mapArquivo = {
+            "arquivo": _listaProcessada(map: map),
+          };
+          listaArquivos.add(mapArquivo);
         }
-        return listaGeral;
+        return listaArquivos;
       } else {
         throw Exception(
             "Erro ao mapear as informaões do arquivo - ${parameters.error}");
