@@ -35,7 +35,7 @@ class ParametrosMapeamentoArquivoHtml implements ParametersReturnResult {
 }
 
 class ParametrosProcessamentoArquivoHtml implements ParametersReturnResult {
-  final List<Map<String, List<Map<String, dynamic>>>> listaMapBruta;
+  final List<Map<String, Map<String, dynamic>>> listaMapBruta;
   @override
   final AppError error;
   @override

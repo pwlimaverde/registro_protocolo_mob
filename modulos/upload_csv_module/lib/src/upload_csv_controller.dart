@@ -96,9 +96,9 @@ class UploadCsvController extends GetxController
           showRuntimeMilliseconds: true,
         ),
       );
-      // print(testeProcessamento.status);
+      print(testeProcessamento.status);
 
-      // print(testeProcessamento.result);
+      print(testeProcessamento.result.length);
     }
   }
 

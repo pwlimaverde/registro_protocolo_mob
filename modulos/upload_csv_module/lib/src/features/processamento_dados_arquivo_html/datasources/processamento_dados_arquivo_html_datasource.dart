@@ -11,17 +11,15 @@ class ProcessamentoDadosArquivoHtmlDatasource
       if (parameters is ParametrosProcessamentoArquivoHtml) {
         List<RemessaModel> remessasProcessadas = [];
         for (Map<String, dynamic> mapRemessa in parameters.listaMapBruta) {
-          print(mapRemessa["arquivo"][2]["remessa"].runtimeType);
           final remessa = RemessaModel(
-            nomeArquivo: mapRemessa["arquivo"][0]["nome do arquivo"],
-            data: mapRemessa["arquivo"][1]["data da remessa"],
+            nomeArquivo: mapRemessa["arquivo"]["nome do arquivo"],
+            data: mapRemessa["arquivo"]["data da remessa"],
             remessa: await _processamentoBoleto(
-              listaBruta: mapRemessa["arquivo"][2]["remessa"],
+              listaBruta: mapRemessa["arquivo"]["remessa"],
             ),
           );
-          print(remessa);
+          remessasProcessadas.add(remessa);
         }
-
         return remessasProcessadas;
       } else {
         throw Exception("Erro ao processar arquivo");
@@ -33,12 +31,12 @@ class ProcessamentoDadosArquivoHtmlDatasource
 }
 
 Future<List<BoletoModel>> _processamentoBoleto({
-  required List<Map<String, dynamic>> listaBruta,
+  required List<Map<String, String>> listaBruta,
 }) async {
   List<BoletoModel> boletos = [];
 
   if (listaBruta.isNotEmpty) {
-    for (Map<String, dynamic> boleto in listaBruta) {
+    for (Map<String, String> boleto in listaBruta) {
       BoletoModel model = BoletoModel.fromMap(boleto);
       boletos.add(model);
     }

@@ -4,17 +4,17 @@ import 'dart:convert' as convert;
 import '../../../utils/parametros/parametros_upload_csv_module.dart';
 
 class MapeamentoDadosArquivoHtmlDatasource
-    implements Datasource<List<Map<String, List<Map<String, dynamic>>>>> {
+    implements Datasource<List<Map<String, Map<String, dynamic>>>> {
   @override
-  Future<List<Map<String, List<Map<String, dynamic>>>>> call(
+  Future<List<Map<String, Map<String, dynamic>>>> call(
       {required ParametersReturnResult parameters}) async {
     if (parameters is ParametrosMapeamentoArquivoHtml) {
       List<Map<String, Uint8List>> mapBytes = parameters.listaMapBytes;
 
       if (mapBytes.isNotEmpty) {
-        List<Map<String, List<Map<String, dynamic>>>> listaArquivos = [];
+        List<Map<String, Map<String, dynamic>>> listaArquivos = [];
         for (Map<String, Uint8List> map in mapBytes) {
-          final Map<String, List<Map<String, dynamic>>> mapArquivo = {
+          final Map<String, Map<String, dynamic>> mapArquivo = {
             "arquivo": _listaProcessada(map: map),
           };
           listaArquivos.add(mapArquivo);
@@ -30,7 +30,7 @@ class MapeamentoDadosArquivoHtmlDatasource
     }
   }
 
-  List<Map<String, dynamic>> _listaProcessada({
+  Map<String, dynamic> _listaProcessada({
     required Map<String, Uint8List> map,
   }) {
     if (map.keys.first.contains(".csv")) {
@@ -46,21 +46,21 @@ class MapeamentoDadosArquivoHtmlDatasource
     }
   }
 
-  List<Map<String, dynamic>> _processamentoXlsx({
+  Map<String, dynamic> _processamentoXlsx({
     required Map<String, Uint8List> map,
   }) {
     var decoder = SpreadsheetDecoder.decodeBytes(map.values.first);
     List<List<dynamic>> listXlsx = [];
-    List<Map<String, dynamic>> mapXlsx = [];
+    Map<String, dynamic> mapXlsx = {};
     List<List<dynamic>> listaDados = [];
-    List<Map<String, dynamic>> mapDados = [];
+    List<Map<String, String>> mapDados = [];
 
     listXlsx.addAll(decoder.tables[decoder.tables.keys.first]!.rows);
 
-    mapXlsx.add({"nome do arquivo": map.keys.first});
+    mapXlsx.addAll({"nome do arquivo": map.keys.first});
 
     final DateTime dataProcessada = DateTime.parse(listXlsx[0].last);
-    mapXlsx.add({"data da remessa": dataProcessada});
+    mapXlsx.addAll({"data da remessa": dataProcessada});
 
     listaDados.addAll(listXlsx);
     listaDados.removeRange(0, 2);
@@ -68,7 +68,7 @@ class MapeamentoDadosArquivoHtmlDatasource
     if (listaDados.isNotEmpty) {
       final List<dynamic> cabecario = listXlsx[1];
       for (List<dynamic> lista in listaDados) {
-        Map<String, dynamic> modelJason = {};
+        Map<String, String> modelJason = {};
         for (dynamic item in lista) {
           int indexL = lista.indexOf(item);
           modelJason.addAll({"${cabecario[indexL]}": "$item"});
@@ -80,33 +80,33 @@ class MapeamentoDadosArquivoHtmlDatasource
         }
       }
     }
-    mapXlsx.add({"remessa": mapDados});
+    mapXlsx.addAll({"remessa": mapDados});
     return mapXlsx;
   }
 
-  List<Map<String, dynamic>> _processamentoCsv(
+  Map<String, dynamic> _processamentoCsv(
       {required Map<String, Uint8List> map}) {
     final decoderByte = convert.latin1.decode(map.values.first);
     List<List<dynamic>> listCsv = [];
     List<List<dynamic>> listaDados = [];
-    List<Map<String, dynamic>> mapCsv = [];
-    List<Map<String, dynamic>> mapDados = [];
+    Map<String, dynamic> mapCsv = {};
+    List<Map<String, String>> mapDados = [];
 
     listCsv.addAll(
         const CsvToListConverter(fieldDelimiter: ";").convert(decoderByte));
 
-    mapCsv.add({"nome do arquivo": map.keys.first});
+    mapCsv.addAll({"nome do arquivo": map.keys.first});
     final DateTime dataProcessada = DateTime.parse(
       "${listCsv[0].last.substring(6, 10)}-${listCsv[0].last.substring(3, 5)}-${listCsv[0].last.substring(0, 2)}",
     );
-    mapCsv.add({"data da remessa": dataProcessada});
+    mapCsv.addAll({"data da remessa": dataProcessada});
 
     listaDados.addAll(listCsv);
     listaDados.removeRange(0, 2);
     if (listaDados.isNotEmpty) {
       List<dynamic> cabecario = listCsv[1];
       for (List<dynamic> lista in listaDados) {
-        Map<String, dynamic> modelJason = {};
+        Map<String, String> modelJason = {};
         for (dynamic item in lista) {
           int indexL = lista.indexOf(item);
           modelJason.addAll({"${cabecario[indexL]}": "$item"});
@@ -118,7 +118,7 @@ class MapeamentoDadosArquivoHtmlDatasource
         }
       }
     }
-    mapCsv.add({"remessa": mapDados});
+    mapCsv.addAll({"remessa": mapDados});
     return mapCsv;
   }
 }
