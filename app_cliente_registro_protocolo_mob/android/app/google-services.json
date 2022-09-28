@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "763738041874",
+    "project_id": "registro-protocolo-mob",
+    "storage_bucket": "registro-protocolo-mob.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:763738041874:android:5dd04ec3b3e79d12b272cb",
+        "android_client_info": {
+          "package_name": "br.com.registro_protocolo_mob.app_cliente_registro_protocolo_mob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "763738041874-1g5n85ed8hs7mch9mukvf1endec9d9hn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPB_y4EpPZ3Xe0rWvvyhiaFsTfF_N9M50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "763738041874-1g5n85ed8hs7mch9mukvf1endec9d9hn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "763738041874-e4q8c73k1igqk6f3snvh4ke7ks4m5lbi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.registroprotocolomob.appClienteRegistroProtocoloMob"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
