@@ -1,7 +1,7 @@
 import 'package:dependencies_module/dependencies_module.dart';
 import 'dart:convert' as convert;
 
-import '../../../utils/parametros/parametros_upload_csv_module.dart';
+import '../../../utils/parametros/parametros_upload_remessa_module.dart';
 
 class MapeamentoDadosArquivoHtmlDatasource
     implements Datasource<List<Map<String, Map<String, dynamic>>>> {

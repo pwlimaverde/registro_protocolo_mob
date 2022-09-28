@@ -1,8 +1,8 @@
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
 
-class BodyUploadCsvWidget extends StatelessWidget {
-  const BodyUploadCsvWidget({Key? key}) : super(key: key);
+class BodyUploadRemessaWidget extends StatelessWidget {
+  const BodyUploadRemessaWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +12,10 @@ class BodyUploadCsvWidget extends StatelessWidget {
         color: Colors.black12,
         child: Center(
           child: Obx(() {
-            // if (uploadCsvController.uploadCsvOpsList.isNotEmpty ||
-            //     uploadCsvController.updateCsvOpsList.isNotEmpty ||
-            //     uploadCsvController.duplicadasCsvOpsList.isNotEmpty ||
-            //     uploadCsvController.uploadCsvOpsListError.isNotEmpty) {
+            // if (uploadRemessaController.uploadRemessaOpsList.isNotEmpty ||
+            //     uploadRemessaController.updateCsvOpsList.isNotEmpty ||
+            //     uploadRemessaController.duplicadasCsvOpsList.isNotEmpty ||
+            //     uploadRemessaController.uploadRemessaOpsListError.isNotEmpty) {
             //   coreModuleController.statusLoad(false);
             // } else {
             //   coreModuleController.statusLoad(true);
@@ -38,7 +38,7 @@ _tabBar() {
     height: tabHeight,
     color: Colors.grey[700],
     child: TabBar(
-      controller: uploadCsvController.tabController,
+      controller: uploadRemessaController.tabController,
       labelColor: Colors.white,
       indicatorColor: Colors.blue,
       labelStyle: const TextStyle(
@@ -46,8 +46,8 @@ _tabBar() {
         fontSize: 13,
       ),
       tabs: coreModuleController.showMenu
-          ? uploadCsvController.myTabsSmall
-          : uploadCsvController.myTabs,
+          ? uploadRemessaController.myTabsSmall
+          : uploadRemessaController.myTabs,
     ),
   );
 }
@@ -57,7 +57,7 @@ _tabBarView() {
     width: coreModuleController.sizeW,
     height: coreModuleController.sizeH - tabHeight,
     child: TabBarView(
-      controller: uploadCsvController.tabController,
+      controller: uploadRemessaController.tabController,
       children: [
         Center(),
         Center(),
@@ -74,7 +74,7 @@ _tabBarView() {
 
 // _uploadOpsList() {
 //   return designSystemController.opslistWidget(
-//     filtro: uploadCsvController.uploadCsvOpsList,
+//     filtro: uploadRemessaController.uploadRemessaOpsList,
 //     can: opsController.setCancelarOP,
 //     check: opsController.setCheckOP,
 //     save: opsController.setInfoOP,
@@ -85,7 +85,7 @@ _tabBarView() {
 
 // _updateOpsList() {
 //   return designSystemController.opslistWidget(
-//     filtro: uploadCsvController.updateCsvOpsList,
+//     filtro: uploadRemessaController.updateCsvOpsList,
 //     can: opsController.setCancelarOP,
 //     check: opsController.setCheckOP,
 //     save: opsController.setInfoOP,
@@ -96,7 +96,7 @@ _tabBarView() {
 
 // _duplicadasOpsList() {
 //   return designSystemController.opslistWidget(
-//     filtro: uploadCsvController.duplicadasCsvOpsList,
+//     filtro: uploadRemessaController.duplicadasCsvOpsList,
 //     can: opsController.setCancelarOP,
 //     check: opsController.setCheckOP,
 //     save: opsController.setInfoOP,
@@ -107,7 +107,7 @@ _tabBarView() {
 
 // _uploadOpsListError() {
 //   return designSystemController.opslistWidget(
-//     filtro: uploadCsvController.uploadCsvOpsListError,
+//     filtro: uploadRemessaController.uploadRemessaOpsListError,
 //     can: opsController.setCancelarOP,
 //     check: opsController.setCheckOP,
 //     save: opsController.setInfoOP,

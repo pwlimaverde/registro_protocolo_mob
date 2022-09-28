@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'features/mapeamento_dados_arquivo_html/domain/usecase/mapeamento_dados_arquivo_html_usecase.dart';
 import 'features/processamento_dados_arquivo_html/domain/usecase/processamento_dados_arquivo_html_usecase.dart';
 import 'features/upload_ops/domain/usecase/upload_boleto_usecase.dart';
-import 'utils/errors/erros_upload_csv.dart';
-import 'utils/parametros/parametros_upload_csv_module.dart';
+import 'utils/errors/erros_upload_remessa.dart';
+import 'utils/parametros/parametros_upload_remessa_module.dart';
 
-class UploadCsvController extends GetxController
+class UploadRemessaController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final UploadBoletoUsecase uploadOpsUsecase;
   final MapeamentoDadosArquivoHtmlUsecase mapeamentoDadosArquivoHtmlUsecase;
   final ProcessamentoDadosArquivoHtmlUsecase
       processamentoDadosArquivoHtmlUsecase;
   final UploadArquivoHtmlPresenter uploadArquivoHtmlPresenter;
-  UploadCsvController({
+  UploadRemessaController({
     required this.uploadOpsUsecase,
     required this.mapeamentoDadosArquivoHtmlUsecase,
     required this.uploadArquivoHtmlPresenter,
@@ -57,16 +57,16 @@ class UploadCsvController extends GetxController
     return super.onDelete;
   }
 
-  final uploadCsvOpsList = <BoletoModel>[].obs;
+  final uploadRemessaOpsList = <BoletoModel>[].obs;
   final updateCsvOpsList = <BoletoModel>[].obs;
   final duplicadasCsvOpsList = <BoletoModel>[].obs;
-  final uploadCsvOpsListError = <BoletoModel>[].obs;
+  final uploadRemessaOpsListError = <BoletoModel>[].obs;
 
   void _clearLists() {
-    uploadCsvOpsList.clear();
+    uploadRemessaOpsList.clear();
     updateCsvOpsList.clear();
     duplicadasCsvOpsList.clear();
-    uploadCsvOpsListError.clear();
+    uploadRemessaOpsListError.clear();
   }
 
   Future<void> setUploadOps() async {
@@ -98,7 +98,7 @@ class UploadCsvController extends GetxController
       );
       print(testeProcessamento.status);
 
-      print(testeProcessamento.result.length);
+      print(testeProcessamento.result);
     }
   }
 
@@ -113,7 +113,7 @@ class UploadCsvController extends GetxController
   //     ),
   //   );
   //   if (listOpsError.isNotEmpty) {
-  //     uploadCsvOpsListError(listOpsError);
+  //     uploadRemessaOpsListError(listOpsError);
   //   }
   //   if (listOps.isNotEmpty) {
   //     return listOps;
@@ -181,7 +181,7 @@ class UploadCsvController extends GetxController
   //           message: "Upload de ${listOpsNovas.length} Ops com Sucesso!",
   //         ),
   //       );
-  //       uploadCsvOpsList(listOpsNovas);
+  //       uploadRemessaOpsList(listOpsNovas);
   //     }
   //     if (listOpsUpdate.isNotEmpty) {
   //       final Iterable<Future<OpsModel>> enviarOpsFuturo =

@@ -5,12 +5,13 @@ import 'features/processamento_dados_arquivo_html/datasources/processamento_dado
 import 'features/processamento_dados_arquivo_html/domain/usecase/processamento_dados_arquivo_html_usecase.dart';
 import 'features/upload_ops/datasources/upload_ops_datasource.dart';
 import 'features/upload_ops/domain/usecase/upload_boleto_usecase.dart';
+import 'upload_remessa_controller.dart';
 
-class UploadCsvBiding implements Bindings {
+class UploadRemessaBiding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<UploadCsvController>(() {
-      return UploadCsvController(
+    Get.lazyPut<UploadRemessaController>(() {
+      return UploadRemessaController(
         uploadArquivoHtmlPresenter: UploadArquivoHtmlPresenter(),
         uploadOpsUsecase: UploadBoletoUsecase(
           datasource: UploadOpsDatasource(),

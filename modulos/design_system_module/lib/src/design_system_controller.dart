@@ -115,7 +115,7 @@ class DesignSystemController extends GetxController {
   }
 
   void _setUpload() {
-    uploadCsvController.setUploadOps();
+    uploadRemessaController.setUploadOps();
   }
 
   // void _setBuscando() {

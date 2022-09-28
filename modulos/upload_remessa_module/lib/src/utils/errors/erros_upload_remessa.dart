@@ -1,15 +1,15 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
-class ErroUploadCsv implements AppError {
+class ErroUploadRemessa implements AppError {
   @override
   String message;
-  ErroUploadCsv({
+  ErroUploadRemessa({
     required this.message,
   });
 
   @override
   String toString() {
-    return "ErroUploadCsv - $message";
+    return "ErroUploadRemessa - $message";
   }
 }
 
@@ -22,7 +22,7 @@ class ErroProcessamentoCsv implements AppError {
 
   @override
   String toString() {
-    return "ErroUploadCsv - $message";
+    return "ErroUploadRemessa - $message";
   }
 }
 
@@ -48,6 +48,6 @@ class ErroUploadArquivo implements AppError {
 
   @override
   String toString() {
-    return "ErroUploadCsv - $message";
+    return "ErroUploadRemessa - $message";
   }
 }

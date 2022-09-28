@@ -92,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.1"
-  decoder_upload_csv_web_package:
-    dependency: transitive
-    description:
-      path: "../packages/decoder_upload_csv_web_package"
-      relative: true
-    source: path
-    version: "0.0.1"
   dependencies_module:
     dependency: "direct main"
     description:
@@ -532,10 +525,10 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  upload_csv_module:
+  upload_remessa_module:
     dependency: transitive
     description:
-      path: "../modulos/upload_csv_module"
+      path: "../modulos/upload_remessa_module"
       relative: true
     source: path
     version: "0.0.1"

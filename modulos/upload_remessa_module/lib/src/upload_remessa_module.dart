@@ -1,16 +1,17 @@
 import 'package:dependencies_module/dependencies_module.dart';
-import 'upload_csv_bindings.dart';
-import 'ui/upload_csv_page.dart';
 
-class UploadCsvModule extends Module {
+import 'ui/upload_remessa_page.dart';
+import 'upload_remessa_bindings.dart';
+
+class UploadRemessaModule extends Module {
   @override
   List<GetPage> routers = [
     GetPage(
       name: Routes.initial.caminho,
       transition: Transition.noTransition,
-      page: () => const UploadCsvPage(),
+      page: () => const UploadRemessaPage(),
       bindings: [
-        UploadCsvBiding(),
+        UploadRemessaBiding(),
       ],
     ),
   ];

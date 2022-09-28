@@ -7,23 +7,13 @@ class RemessaModel {
   final DateTime data;
   final List<BoletoModel> remessa;
   final int quantidadeProtocolos;
+  final DateTime upload;
   RemessaModel({
     required this.nomeArquivo,
     required this.data,
     required this.remessa,
-  }) : quantidadeProtocolos = remessa.length;
-
-  RemessaModel copyWith({
-    String? nomeArquivo,
-    DateTime? data,
-    List<BoletoModel>? remessa,
-  }) {
-    return RemessaModel(
-      nomeArquivo: nomeArquivo ?? this.nomeArquivo,
-      data: data ?? this.data,
-      remessa: remessa ?? this.remessa,
-    );
-  }
+  })  : quantidadeProtocolos = remessa.length,
+        upload = DateTime.now();
 
   Map<String, dynamic> toMap() {
     return {
@@ -49,7 +39,7 @@ class RemessaModel {
 
   @override
   String toString() =>
-      'RemessaModel(nomeArquivo: $nomeArquivo, data: ${dataFormatoDDMMYYYY.format(data)}, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
+      'RemessaModel(nome do arquivo: $nomeArquivo, upload: $upload, data: ${dataFormatoDDMMYYYY.format(data)}, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
 
   @override
   bool operator ==(Object other) {

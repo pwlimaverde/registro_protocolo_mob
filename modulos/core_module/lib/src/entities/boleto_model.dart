@@ -3,19 +3,19 @@ import 'dart:convert';
 class BoletoModel {
   final int idCliente;
   final String? cliente;
-  final String? documento;
+  final int? documento;
   final String? email;
-  final String? telefoneFixo;
-  final String? telefoneMovel;
+  final int? telefoneFixo;
+  final int? telefoneMovel;
   final int idContrato;
-  final String? dataHabilitacaoContrato;
+  final DateTime? dataHabilitacaoContrato;
   final String? numeroDeBoleto;
   final String? formaDeCobranca;
-  final String? dataVencimentoFatura;
-  final String? valorFatura;
-  final String? dataEmissaoFatura;
+  final DateTime? dataVencimentoFatura;
+  final double? valorFatura;
+  final DateTime? dataEmissaoFatura;
   final String? arquivo;
-  final String? dataImpressaoFatura;
+  final DateTime? dataImpressaoFatura;
   final String? uf;
   final String? cidade;
   final String? bairro;
@@ -88,19 +88,25 @@ class BoletoModel {
     return BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',
-      documento: map['Documento'] ?? '',
+      documento: int.tryParse(map['Documento'].toString()) ?? 0,
       email: map['Email'] ?? '',
-      telefoneFixo: map['Telefone Fixo'] ?? '',
-      telefoneMovel: map['Telefone Movel'] ?? '',
+      telefoneFixo: int.tryParse(map['Telefone Fixo'].toString()) ?? 0,
+      telefoneMovel: int.tryParse(map['Telefone Movel'].toString()) ?? 0,
       idContrato: int.tryParse(map['ID Contrato'].toString()) ?? 0,
-      dataHabilitacaoContrato: map['Data Habilitacao contrato'] ?? '',
+      dataHabilitacaoContrato:
+          DateTime.tryParse(map['Data Habilitacao contrato'].toString()),
       numeroDeBoleto: map['Número de Boleto'] ?? '',
       formaDeCobranca: map['Forma de Cobrança'] ?? '',
-      dataVencimentoFatura: map['Data Vencimento Fatura'] ?? '',
-      valorFatura: map['Valor Fatura'] ?? '',
-      dataEmissaoFatura: map['Data Emissao Fatura'] ?? '',
+      dataVencimentoFatura:
+          DateTime.tryParse(map['Data Vencimento Fatura'].toString()),
+      valorFatura: double.tryParse(map['Valor Fatura'].toString()),
+      dataEmissaoFatura: DateTime.tryParse(
+        "${map['Data Emissao Fatura'].toString().substring(6, 10)}-${map['Data Emissao Fatura'].toString().substring(3, 5)}-${map['Data Emissao Fatura'].toString().substring(0, 2)}",
+      ),
       arquivo: map['Arquivo'] ?? '',
-      dataImpressaoFatura: map['Data Impressão Fatura'] ?? '',
+      dataImpressaoFatura: DateTime.tryParse(
+        "${map['Data Impressão Fatura'].toString().substring(6, 10)}-${map['Data Impressão Fatura'].toString().substring(3, 5)}-${map['Data Impressão Fatura'].toString().substring(0, 2)}",
+      ),
       uf: map['UF'] ?? '',
       cidade: map['Cidade'] ?? '',
       bairro: map['Bairro'] ?? '',

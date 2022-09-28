@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       initialBinding: CoreModuleBindings(),
       getPages: [
         // ...SplashModule().routers,
-        ...UploadCsvModule().routers,
+        ...UploadRemessaModule().routers,
         // ...HomeModule().routers,
       ],
       theme: ThemeData(
