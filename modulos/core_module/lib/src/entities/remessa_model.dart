@@ -5,20 +5,21 @@ import '../../core_module.dart';
 class RemessaModel {
   final String nomeArquivo;
   final DateTime data;
+  final DateTime upload;
   final List<BoletoModel> remessa;
   final int quantidadeProtocolos;
-  final DateTime upload;
   RemessaModel({
     required this.nomeArquivo,
     required this.data,
+    required this.upload,
     required this.remessa,
-  })  : quantidadeProtocolos = remessa.length,
-        upload = DateTime.now();
+  }) : quantidadeProtocolos = remessa.length;
 
   Map<String, dynamic> toMap() {
     return {
       'nomeArquivo': nomeArquivo,
       'data': data.millisecondsSinceEpoch,
+      'upload': data.millisecondsSinceEpoch,
       'remessa': remessa.map((x) => x.toMap()).toList(),
     };
   }
@@ -27,6 +28,7 @@ class RemessaModel {
     return RemessaModel(
       nomeArquivo: map['nomeArquivo'] ?? '',
       data: DateTime.fromMillisecondsSinceEpoch(map['data']),
+      upload: DateTime.fromMillisecondsSinceEpoch(map['upload']),
       remessa: List<BoletoModel>.from(
           map['remessa']?.map((x) => BoletoModel.fromMap(x))),
     );

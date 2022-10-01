@@ -3,9 +3,8 @@ import 'features/mapeamento_dados_arquivo_html/datasources/mapeamento_dados_arqu
 import 'features/mapeamento_dados_arquivo_html/domain/usecase/mapeamento_dados_arquivo_html_usecase.dart';
 import 'features/processamento_dados_arquivo_html/datasources/processamento_dados_arquivo_html_datasource.dart';
 import 'features/processamento_dados_arquivo_html/domain/usecase/processamento_dados_arquivo_html_usecase.dart';
-import 'features/upload_ops/datasources/upload_ops_datasource.dart';
-import 'features/upload_ops/domain/usecase/upload_boleto_usecase.dart';
-import 'upload_remessa_controller.dart';
+import 'features/upload_remessa_firebase/datasources/upload_remessa_firebase_datasource.dart';
+import 'features/upload_remessa_firebase/domain/usecase/upload_remessa_firebase_usecase.dart';
 
 class UploadRemessaBiding implements Bindings {
   @override
@@ -13,8 +12,8 @@ class UploadRemessaBiding implements Bindings {
     Get.lazyPut<UploadRemessaController>(() {
       return UploadRemessaController(
         uploadArquivoHtmlPresenter: UploadArquivoHtmlPresenter(),
-        uploadOpsUsecase: UploadBoletoUsecase(
-          datasource: UploadOpsDatasource(),
+        uploadRemessaFirebaseUsecase: UploadRemessaFirebaseUsecase(
+          datasource: UploadRemessaFirebaseDatasource(),
         ),
         mapeamentoDadosArquivoHtmlUsecase: MapeamentoDadosArquivoHtmlUsecase(
           datasource: MapeamentoDadosArquivoHtmlDatasource(),

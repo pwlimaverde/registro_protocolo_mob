@@ -1,7 +1,7 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
-class ParametrosUploadBoleto implements ParametersReturnResult {
-  final List<BoletoModel> listaBoletosCarregados;
+class ParametrosUploadRemessa implements ParametersReturnResult {
+  final List<RemessaModel> listaRemessaCarregados;
   @override
   final AppError error;
   @override
@@ -9,8 +9,8 @@ class ParametrosUploadBoleto implements ParametersReturnResult {
   @override
   final String nameFeature;
 
-  ParametrosUploadBoleto({
-    required this.listaBoletosCarregados,
+  ParametrosUploadRemessa({
+    required this.listaRemessaCarregados,
     required this.error,
     required this.showRuntimeMilliseconds,
     required this.nameFeature,

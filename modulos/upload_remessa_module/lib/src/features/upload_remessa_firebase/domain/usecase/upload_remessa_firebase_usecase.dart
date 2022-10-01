@@ -1,15 +1,14 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
-class UploadBoletoUsecase
-    extends UseCaseImplement<Map<String, List<BoletoModel>>> {
-  final Datasource<Map<String, List<BoletoModel>>> datasource;
+class UploadRemessaFirebaseUsecase extends UseCaseImplement<bool> {
+  final Datasource<bool> datasource;
 
-  UploadBoletoUsecase({
+  UploadRemessaFirebaseUsecase({
     required this.datasource,
   });
 
   @override
-  Future<ReturnSuccessOrError<Map<String, List<BoletoModel>>>> call({
+  Future<ReturnSuccessOrError<bool>> call({
     required ParametersReturnResult parameters,
   }) {
     final result = returnUseCase(
