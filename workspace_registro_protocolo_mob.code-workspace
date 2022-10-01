@@ -26,6 +26,9 @@
 		},
 		{
 			"path": "modulos/upload_remessa_module"
+		},
+		{
+			"path": "modulos/remessas_module"
 		}
 	], 
 	"settings": {} 

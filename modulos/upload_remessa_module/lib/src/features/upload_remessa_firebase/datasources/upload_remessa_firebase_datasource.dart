@@ -13,21 +13,10 @@ class UploadRemessaFirebaseDatasource implements Datasource<bool> {
               .collection("remessas")
               .doc(model.nomeArquivo)
               .set(mapRemessa);
-          final _firestore = await FirebaseFirestore.instance
-              .collection("remessas")
-              .doc(model.nomeArquivo)
-              .get();
-          final remessaFire2 = _firestore.data();
-          if (remessaFire2 != null) {
-            final remessaFire = RemessaModel.fromMap(remessaFire2);
-            print("**********");
-            print(remessaFire);
-            print("**********");
-          }
         }
         return true;
       } else {
-        throw false;
+        return false;
       }
     } catch (e) {
       throw Exception("Erro ao fazer o upload das remessas no banco de dados");
