@@ -67,22 +67,13 @@ class UploadRemessaController extends GetxController
 
   Future<void> setUploadOps() async {
     _clearLists();
-    final processamento = await _processamentoDados(
-      listaMapBruta: await _mapeamentoDadosArquivo(
-        listaMapBytes: await _carregarArquivos(),
+    _uploadRemessas(
+      novasRemessas: await _processamentoDados(
+        listaMapBruta: await _mapeamentoDadosArquivo(
+          listaMapBytes: await _carregarArquivos(),
+        ),
       ),
     );
-    final uploadFirebase = await uploadRemessaFirebaseUsecase(
-      parameters: ParametrosUploadRemessa(
-          listaRemessaCarregados: processamento,
-          error: ErroUploadArquivo(
-              message:
-                  "Erro ao fazer o upload da Remessa para o banco de dados"),
-          showRuntimeMilliseconds: true,
-          nameFeature: "upload firebase"),
-    );
-    print(uploadFirebase.status);
-    print(uploadFirebase.result);
   }
 
   Future<List<Map<String, Uint8List>>> _carregarArquivos() async {
@@ -148,26 +139,43 @@ class UploadRemessaController extends GetxController
     );
 
     if (remessasProcessadas.status == StatusResult.success) {
-      final listRemessa = remessasProcessadas.result["remessasProcessadas"];
-      final listRemessaError =
+      final List<RemessaModel> listRemessa =
+          remessasProcessadas.result["remessasProcessadas"];
+      final List<RemessaModel> listRemessaError =
           remessasProcessadas.result["remessasProcessadasError"];
+      final List<RemessaModel> listRemessasDuplicadas = [];
+      final List<RemessaModel> listRemessasNovas = [];
+
+      for (RemessaModel remessa in listRemessa) {
+        final consultaRemessa = remessasController.listTadasRemessas.where(
+          (element) => element.nomeArquivo == remessa.nomeArquivo,
+        );
+        if (consultaRemessa.isEmpty) {
+          listRemessasNovas.add(remessa);
+        } else {
+          listRemessasDuplicadas.add(remessa);
+        }
+      }
       coreModuleController.message(
         MessageModel.info(
-          title: "Processamento de OPS",
+          title: "Processamento de Remessa",
           message:
-              "${listRemessa.length} Processadas com Sucesso! \n ${listRemessaError.length} Processadas com Erro!",
+              "${listRemessa.length} Processadas com Sucesso! \n ${listRemessasNovas.length} Nova(s) Ressa(s)! \n ${listRemessasDuplicadas.length} Remessas Duplicadas! \n ${listRemessaError.length} Processadas com Erro!",
         ),
       );
+      if (listRemessasDuplicadas.isNotEmpty) {
+        duplicadasRemessaList(listRemessasDuplicadas);
+      }
       if (listRemessaError.isNotEmpty) {
         uploadRemessaListError(listRemessaError);
       }
-      if (listRemessa.isNotEmpty) {
-        return listRemessa;
+      if (listRemessasNovas.isNotEmpty) {
+        return listRemessasNovas;
       } else {
         coreModuleController.message(
-          MessageModel.error(
-            title: 'Processamento de OPS',
-            message: 'Erro! nenhuma OP a ser processada!',
+          MessageModel.info(
+            title: 'Processamento de Remessa',
+            message: 'Nenhuma Remessa Nova a ser processada!',
           ),
         );
         return <RemessaModel>[];
@@ -175,92 +183,56 @@ class UploadRemessaController extends GetxController
     } else {
       coreModuleController.message(
         MessageModel.error(
-          title: 'Processamento de OPS',
-          message: 'Erro ao processar as OPS!',
+          title: 'Processamento de Remessa',
+          message: 'Erro ao processar as Remessa!',
         ),
       );
       return <RemessaModel>[];
     }
   }
 
-  // Future<Map<String, List<OpsModel>>?> _triagemOps({
-  //   required List<OpsModel>? listaOps,
-  // }) async {
-  //   final uploadOps = listaOps != null
-  //       ? await uploadOpsUsecase(
-  //           parameters: ParametrosUploadOps(
-  //             error: ErroUploadOps(message: "Erro ao fazer o upload das Ops!"),
-  //             listaOpsCarregadas: listaOps,
-  //             nameFeature: 'Uploadv Ops',
-  //             showRuntimeMilliseconds: false,
-  //           ),
-  //         )
-  //       : null;
+  Future<void> _uploadRemessas({
+    required List<RemessaModel> novasRemessas,
+  }) async {
+    if (novasRemessas.isNotEmpty) {
+      final Iterable<Future<RemessaModel>> enviarRemessasFuturo =
+          novasRemessas.map(_enviarNovaRemessa);
 
-  //   if (uploadOps is SuccessReturn<Map<String, List<OpsModel>>>) {
-  //     return uploadOps.result;
-  //   } else {
-  //     coreModuleController.message(
-  //       MessageModel.error(
-  //         title: 'Triagem OPS',
-  //         message: 'Erro ao fazer a triagem das OPS!',
-  //       ),
-  //     );
-  //     return null;
-  //   }
-  // }
+      final Future<Iterable<RemessaModel>> waited =
+          Future.wait(enviarRemessasFuturo);
 
-  // Future<void> _uploadOps({
-  //   required Map<String, List<OpsModel>>? triagemOps,
-  // }) async {
-  //   if (triagemOps != null) {
-  //     final listOpsNovas = triagemOps["listOpsNovas"] ?? [];
-  //     final listOpsUpdate = triagemOps["listOpsUpdate"] ?? [];
-  //     final listOpsDuplicadas = triagemOps["listOpsDuplicadas"] ?? [];
-  //     if (listOpsNovas.isNotEmpty) {
-  //       final Iterable<Future<OpsModel>> enviarOpsFuturo =
-  //           listOpsNovas.map(_enviarNovaOp);
+      await waited;
+      coreModuleController.message(
+        MessageModel.info(
+          title: "Upload de Remessa",
+          message: "Upload de ${novasRemessas.length} Remessa com Sucesso!",
+        ),
+      );
+      uploadRemessaList(novasRemessas);
+    }
+  }
 
-  //       final Future<Iterable<OpsModel>> waited = Future.wait(enviarOpsFuturo);
+  Future<RemessaModel> _enviarNovaRemessa(RemessaModel model) async {
+    final uploadFirebase = await uploadRemessaFirebaseUsecase(
+      parameters: ParametrosUploadRemessa(
+        remessaUpload: model,
+        error: ErroUploadArquivo(
+            message: "Erro ao fazer o upload da Remessa para o banco de dados"),
+        showRuntimeMilliseconds: true,
+        nameFeature: "upload firebase",
+      ),
+    );
 
-  //       await waited;
-  //       coreModuleController.message(
-  //         MessageModel.info(
-  //           title: "Upload de OPS",
-  //           message: "Upload de ${listOpsNovas.length} Ops com Sucesso!",
-  //         ),
-  //       );
-  //       uploadCsvOpsList(listOpsNovas);
-  //     }
-  //     if (listOpsUpdate.isNotEmpty) {
-  //       final Iterable<Future<OpsModel>> enviarOpsFuturo =
-  //           listOpsUpdate.map(_enviarUpdateOp);
-
-  //       final Future<Iterable<OpsModel>> waited = Future.wait(enviarOpsFuturo);
-
-  //       await waited;
-  //       coreModuleController.message(
-  //         MessageModel.info(
-  //           title: "Upload de OPS",
-  //           message: "Update de ${listOpsUpdate.length} Ops com Sucesso!",
-  //         ),
-  //       );
-  //       updateCsvOpsList(listOpsUpdate);
-  //     }
-  //     if (listOpsDuplicadas.isNotEmpty) {
-  //       coreModuleController.message(
-  //         MessageModel.info(
-  //           title: "Upload de OPS",
-  //           message: "${listOpsDuplicadas.length} Ops duplicadas!",
-  //         ),
-  //       );
-  //       duplicadasCsvOpsList(listOpsDuplicadas);
-  //     }
-  //     _tabController.index = listOpsNovas.isNotEmpty
-  //         ? 0
-  //         : listOpsUpdate.isNotEmpty
-  //             ? 1
-  //             : 2;
-  //   }
-  // }
+    if (uploadFirebase.status == StatusResult.success) {
+      return model;
+    } else {
+      coreModuleController.message(
+        MessageModel.error(
+          title: 'Upload de Remessa',
+          message: 'Erro enviar $model para o banco de dados!',
+        ),
+      );
+      throw Exception("Erro ao enviar para o banco de dados!");
+    }
+  }
 }

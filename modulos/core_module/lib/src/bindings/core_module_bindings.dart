@@ -11,5 +11,13 @@ class CoreModuleBindings implements Bindings {
       DesignSystemController(),
       permanent: true,
     );
+    Get.put<RemessasController>(
+      RemessasController(
+        carregarRemessasFirebaseUsecase: CarregarRemessasFirebaseUsecase(
+          datasource: CarregarRemessasFirebaseDatasource(),
+        ),
+      ),
+      permanent: true,
+    );
   }
 }

@@ -19,7 +19,7 @@ class MenuWidget extends StatelessWidget {
   _itensMenu() {
     return Container(
       width: menuWidth,
-      color: Colors.grey[400],
+      color: Colors.red[100],
       child: ListView(
         children: <Widget>[
           ItemWidget(
@@ -32,28 +32,29 @@ class MenuWidget extends StatelessWidget {
           ItemWidget(
             page: page,
             indice: 1,
-            nav: Routes.uploadcsv.caminho,
+            nav: Routes.uploadRemessa.caminho,
             icon: const Icon(Icons.cloud_upload),
-            title: "Upload Ops",
+            title: "Upload Remessas",
           ),
           ItemWidget(
             page: page,
             indice: 2,
+            nav: Routes.remessas.caminho,
             icon: const Icon(Icons.cloud),
-            title: "Ops",
+            title: "Remessas",
           ),
-          ItemWidget(
-            page: page,
-            indice: 3,
-            icon: const Icon(Icons.cloud_done),
-            title: "Pcp",
-          ),
-          ItemWidget(
-            page: page,
-            indice: 4,
-            icon: const Icon(Icons.extension),
-            title: "Orçamento Flexo ...",
-          ),
+          // ItemWidget(
+          //   page: page,
+          //   indice: 3,
+          //   icon: const Icon(Icons.cloud_done),
+          //   title: "Pcp",
+          // ),
+          // ItemWidget(
+          //   page: page,
+          //   indice: 4,
+          //   icon: const Icon(Icons.extension),
+          //   title: "Orçamento Flexo ...",
+          // ),
         ],
       ),
     );

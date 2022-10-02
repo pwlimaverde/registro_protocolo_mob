@@ -19,7 +19,7 @@ class RemessaModel {
     return {
       'nomeArquivo': nomeArquivo,
       'data': data.millisecondsSinceEpoch,
-      'upload': data.millisecondsSinceEpoch,
+      'upload': upload.millisecondsSinceEpoch,
       'remessa': remessa.map((x) => x.toMap()).toList(),
     };
   }

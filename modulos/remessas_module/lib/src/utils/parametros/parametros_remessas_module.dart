@@ -1,7 +1,7 @@
 import 'package:dependencies_module/dependencies_module.dart';
 
 class ParametrosUploadRemessa implements ParametersReturnResult {
-  final RemessaModel remessaUpload;
+  final List<RemessaModel> listaRemessaCarregados;
   @override
   final AppError error;
   @override
@@ -10,7 +10,7 @@ class ParametrosUploadRemessa implements ParametersReturnResult {
   final String nameFeature;
 
   ParametrosUploadRemessa({
-    required this.remessaUpload,
+    required this.listaRemessaCarregados,
     required this.error,
     required this.showRuntimeMilliseconds,
     required this.nameFeature,

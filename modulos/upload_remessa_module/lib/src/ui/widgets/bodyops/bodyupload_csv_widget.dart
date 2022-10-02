@@ -36,11 +36,11 @@ class BodyUploadRemessaWidget extends StatelessWidget {
 _tabBar() {
   return Container(
     height: tabHeight,
-    color: Colors.grey[700],
+    color: Colors.red[200],
     child: TabBar(
       controller: uploadRemessaController.tabController,
       labelColor: Colors.white,
-      indicatorColor: Colors.blue,
+      indicatorColor: Colors.grey[800],
       labelStyle: const TextStyle(
         color: Colors.white,
         fontSize: 13,

@@ -5,7 +5,6 @@ class SplashController extends GetxController {
   void incrementCounter() async {
     final _firestore =
         await FirebaseFirestore.instance.collection('likes').get();
-    print(_firestore.docs.first.data());
 
     counter.value++;
   }

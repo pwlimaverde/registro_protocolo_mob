@@ -2,7 +2,8 @@ enum Routes {
   initial(caminho: "/"),
   // home,
   splash(caminho: "/splash"),
-  uploadcsv(caminho: "/uploadcsv");
+  uploadRemessa(caminho: "/uploadremessa"),
+  remessas(caminho: "/remessas");
 
   final String caminho;
   const Routes({required this.caminho});

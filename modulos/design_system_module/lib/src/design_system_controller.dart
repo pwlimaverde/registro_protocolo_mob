@@ -36,7 +36,7 @@ class DesignSystemController extends GetxController {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
-          titulo: "Sistema Ecoprint",
+          titulo: "Sistema Protocolos MOB",
           subtitulo: versaoAtual,
           actions: coreModuleController.pageAtual.value == 2
               ? <Widget>[

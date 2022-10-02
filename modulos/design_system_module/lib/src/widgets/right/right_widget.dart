@@ -23,7 +23,7 @@ class RightWidget extends StatelessWidget {
         ),
         Container(
           width: showMenu ? sizeW : sizeW - menuWidth,
-          color: Colors.grey[200],
+          color: Colors.red[200],
         ),
       ],
     );

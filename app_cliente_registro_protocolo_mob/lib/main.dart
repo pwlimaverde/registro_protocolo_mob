@@ -38,12 +38,13 @@ class MyApp extends StatelessWidget {
       title: 'Sistema Registro de Protocolos MOB',
       initialBinding: CoreModuleBindings(),
       getPages: [
-        // ...SplashModule().routers,
+        ...SplashModule().routers,
         ...UploadRemessaModule().routers,
+        ...RemessasModule().routers,
         // ...HomeModule().routers,
       ],
       theme: ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.red,
       ),
     );
   }
