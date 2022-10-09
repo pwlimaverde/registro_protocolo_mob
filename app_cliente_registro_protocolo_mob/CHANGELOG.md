@@ -1,2 +1,4 @@
+## [0.0.1] - 09/10/2022 
+Primeiro release 
 ## [0.0.0-alpha.1] - 11/09/2022 
 Finalização da configuração do versionamento e inicio do desenvolvimento 
