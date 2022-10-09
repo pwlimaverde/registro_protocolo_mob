@@ -417,7 +417,6 @@ class DesignSystemController extends GetxController {
           itemCount: filtro.length,
           itemBuilder: (context, index) {
             final boletoModel = filtro[index];
-            print(boletoModel.dataHabilitacaoContrato);
             return pw.Container(
               width: coreModuleController.getSizeProporcao(
                 size: coreModuleController.size,
@@ -432,7 +431,8 @@ class DesignSystemController extends GetxController {
                   _codigoDeBarras(
                     data: boletoModel.numeroDeBoleto.toString(),
                   ),
-                  pw.Text(boletoModel.dataVencimentoFatura.toString()),
+                  pw.Text(dataFormatoDDMMYYYY
+                      .format(boletoModel.dataVencimentoFatura!.toDate())),
                 ],
               ),
             );
