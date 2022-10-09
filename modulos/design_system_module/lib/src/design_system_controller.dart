@@ -1,7 +1,9 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -17,6 +19,13 @@ import 'widgets/menu/menu_widget.dart';
 import 'widgets/right/right_widget.dart';
 
 class DesignSystemController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    // getModelo();
+  }
+
   //Widgets Pages
   Scaffold scaffold({
     required Widget body,
@@ -36,7 +45,7 @@ class DesignSystemController extends GetxController {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
-          titulo: "Sistema Ecoprint",
+          titulo: "Sistema Protocolos MOB",
           subtitulo: versaoAtual,
           actions: coreModuleController.pageAtual.value == 2
               ? <Widget>[
@@ -64,6 +73,19 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  // getModelo() async {
+  //   final storage = FirebaseStorage.instance;
+  //   final modeloURL =
+  //       await storage.ref().child("/modelo/BASE-PROTOCOLO-MOB.jpeg").getData();
+  //   print(modeloURL);
+
+  //   final modeloURL2 = await storage
+  //       .ref()
+  //       .child("/modelo/BASE-PROTOCOLO-MOB.jpeg")
+  //       .getData();
+  //   print(modeloURL);
+  // }
+
   // Widget _iconButtonSearch() {
   //   return Obx(
   //     () {
@@ -90,22 +112,20 @@ class DesignSystemController extends GetxController {
   //   );
   // }
 
-  // Widget _iconButtonPrint() {
-  //   return Obx(
-  //     () {
-  //       return opsController.indexPrint.value != 4
-  //           ? BotaoPrint(
-  //               size: 20,
-  //               ativo: true,
-  //               onPressed: _showPrintDialog,
-  //             )
-  //           : const BotaoPrint(
-  //               size: 20,
-  //               ativo: false,
-  //             );
-  //     },
-  //   );
-  // }
+  Widget iconButtonPrint({required RemessaModel filtro}) {
+    return IconButton(
+      padding: const EdgeInsets.all(0),
+      alignment: Alignment.centerLeft,
+      icon: const Icon(
+        size: 40,
+        Icons.print,
+        color: Colors.grey,
+      ),
+      onPressed: (() {
+        _showPrintDialog(filtro: filtro);
+      }),
+    );
+  }
 
   Widget _iconButtonUpload() {
     return BotaoUpload(
@@ -170,14 +190,6 @@ class DesignSystemController extends GetxController {
       ),
     );
   }
-
-  // pw.Widget opslistPrintWidget({
-  //   required filtro,
-  // }) {
-  //   return OpslistPrintWidget(
-  //     filtro: filtro,
-  //   );
-  // }
 
   //Widgets OpsList
   // Widget opslistWidget({
@@ -370,31 +382,215 @@ class DesignSystemController extends GetxController {
   //   return PdfColors.grey100;
   // }
 
-  // _showPrintDialog() {
-  //   return Get.dialog(
-  //     AlertDialog(
-  //       title: const Text("Impressão da listagem das Ops"),
-  //       content: SizedBox(
-  //         width: coreModuleController.getSizeProporcao(
-  //           size: coreModuleController.size,
-  //           proporcao: 60,
-  //         ),
-  //         height: coreModuleController.getSizeProporcao(
-  //           size: coreModuleController.sizeH,
-  //           proporcao: 60,
-  //         ),
-  //         child: _pdf2(
-  //           filtro: opsController.filtroPrint,
-  //           titulo: opsController.myTabs[opsController.indexPrint.value].text
-  //               .toString(),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  _showPrintDialog({required RemessaModel filtro}) {
+    return Get.dialog(
+      AlertDialog(
+        title: const Text("Impressão da listagem dos Protoclos"),
+        content: SizedBox(
+          width: coreModuleController.getSizeProporcao(
+            size: coreModuleController.size,
+            proporcao: 75,
+          ),
+          height: coreModuleController.getSizeProporcao(
+            size: coreModuleController.sizeH,
+            proporcao: 75,
+          ),
+          child: _pdf2(
+            filtro: filtro,
+            titulo: "Lista de boletos",
+          ),
+        ),
+      ),
+    );
+  }
+
+  pw.Widget _protocolosListPrintWidget({
+    required RemessaModel filtro,
+    required dynamic netImage,
+  }) {
+    return pw.SizedBox(
+      width: coreModuleController.getSizeProporcao(
+        size: coreModuleController.size,
+        proporcao: 55,
+      ),
+      child: pw.ListView.builder(
+          itemCount: filtro.remessa.length,
+          itemBuilder: (context, index) {
+            final boletoModel = filtro.remessa[index];
+            return pw.Container(
+              // color: PdfColors.amber,
+              width: coreModuleController.getSizeProporcao(
+                size: coreModuleController.size,
+                proporcao: 50,
+              ),
+              height: 195,
+              child: pw.Stack(
+                children: [
+                  pw.Column(
+                    children: [
+                      pw.Center(
+                        child: pw.Image(netImage),
+                      ),
+                      pw.SizedBox(height: 2),
+                      pw.Text(
+                        filtro.nomeArquivo,
+                        style: const pw.TextStyle(fontSize: 6),
+                      ),
+                    ],
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(152, 35, 22, 10),
+                    child: pw.Container(
+                      width: 325,
+                      // color: PdfColors.red,
+                      child: pw.Text(
+                        "${boletoModel.cliente.toString()} - B. ${boletoModel.bairro.toString()} - ${boletoModel.cidade.toString()} / ${boletoModel.uf.toString()} ${boletoModel.tipoLogradouro.toString()} ${boletoModel.logradouro.toString()}, N.:${boletoModel.numero.toString()} - CEP: ${boletoModel.cep.toString()}",
+                        style: const pw.TextStyle(fontSize: 9),
+                      ),
+                    ),
+                  ),
+                  _codigoDeBarras(
+                    data: boletoModel.numeroDeBoleto.toString(),
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(15, 60, 22, 10),
+                    child: pw.Align(
+                      alignment: pw.Alignment.topRight,
+                      child: pw.Text(
+                        dataFormatoDDMMYYYY.format(
+                          boletoModel.dataVencimentoFatura!.toDate(),
+                        ),
+                        style: const pw.TextStyle(fontSize: 9),
+                      ),
+                    ),
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(6, 35, 5, 10),
+                    child: pw.Align(
+                      alignment: pw.Alignment.bottomLeft,
+                      child: pw.Container(
+                        width: 127,
+                        // color: PdfColors.amber,
+                        child: pw.Column(
+                          children: [
+                            pw.Text(
+                              boletoModel.idCliente.toString(),
+                              style: const pw.TextStyle(fontSize: 10),
+                            ),
+                            pw.Text(
+                              "${boletoModel.cliente.toString()} - B. ${boletoModel.bairro.toString()} - ${boletoModel.cidade.toString()} / ${boletoModel.uf.toString()} ${boletoModel.tipoLogradouro.toString()} ${boletoModel.logradouro.toString()}, N.:${boletoModel.numero.toString()} - CEP: ${boletoModel.cep.toString()} - REF.: ${boletoModel.referencia.toString()}",
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                            pw.Text(
+                              "Remetente:\nMOBTELECOM\nAV. Abolição, 4140 - Mucuripe\nFortaleza - CE\n60165-082",
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                          ],
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  pw.Widget _codigoDeBarras({
+    required String data,
+  }) {
+    final double larguraCodigoDeBarras =
+        (data.toString().length * 10.5).toDouble();
+    return pw.Padding(
+      padding: const pw.EdgeInsets.fromLTRB(10, 10, 10, 80),
+      child: pw.Container(
+        // color: PdfColors.red100,
+        child: pw.Row(
+          children: [
+            pw.Align(
+                alignment: pw.Alignment.bottomLeft,
+                child: pw.SizedBox(
+                  child: pw.BarcodeWidget(
+                    data: data.toString(),
+                    width: larguraCodigoDeBarras,
+                    height: 45,
+                    barcode: pw.Barcode.code128(),
+                    drawText: true,
+                  ),
+                  width: larguraCodigoDeBarras,
+                  height: 45,
+                )),
+            pw.SizedBox(width: 10),
+            pw.SizedBox(
+              child: pw.BarcodeWidget(
+                data: data.toString(),
+                width: 45,
+                height: 45,
+                barcode: pw.Barcode.qrCode(),
+                drawText: false,
+              ),
+              width: 45,
+              height: 45,
+            ),
+            pw.SizedBox(width: 126),
+          ],
+          crossAxisAlignment: pw.CrossAxisAlignment.end,
+          mainAxisAlignment: pw.MainAxisAlignment.end,
+        ),
+      ),
+    );
+  }
+
+  pw.Widget _listaConferenciaPrintWidget({
+    required RemessaModel filtro,
+  }) {
+    return pw.SizedBox(
+      width: coreModuleController.getSizeProporcao(
+        size: coreModuleController.size,
+        proporcao: 55,
+      ),
+      child: pw.ListView.builder(
+          itemCount: filtro.remessa.length,
+          itemBuilder: (context, index) {
+            final boletoModel = filtro.remessa[index];
+            return pw.Container(
+              decoration: const pw.BoxDecoration(
+                color: PdfColors.white,
+                border: pw.Border(
+                  top: pw.BorderSide(width: 0.5, color: PdfColors.black),
+                  bottom: pw.BorderSide(width: 0.5, color: PdfColors.black),
+                ),
+              ),
+              width: coreModuleController.getSizeProporcao(
+                size: coreModuleController.size,
+                proporcao: 50,
+              ),
+              height: 12,
+              child: pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    "${(index + 1)} - ${boletoModel.cliente} - Doc.: ${boletoModel.documento.toString()}",
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.Text(
+                    "Boleto: ${boletoModel.numeroDeBoleto.toString()}",
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
 
   _pdf2({
-    required List<BoletoModel> filtro,
+    required RemessaModel filtro,
     required String titulo,
   }) {
     return PdfPreview(
@@ -403,16 +599,43 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  // Future<Map<String, dynamic>> _gerarNovoCodigo(BoletoModel model) async {
+  //   final codigoDeBarras = await networkImage(
+  //       "https://cors-anywhere.herokuapp.com/https://berrywing.com/barcode/Code128.aspx?bc=${model.numeroDeBoleto}");
+  //   final Map<String, dynamic> mapCod = {
+  //     "boleto": model.numeroDeBoleto,
+  //     "codigoDeBarras": codigoDeBarras
+  //   };
+  //   return mapCod;
+  // }
+
   Future<Uint8List> _generatePdf2({
     required PdfPageFormat format,
     required String title,
-    required List<BoletoModel> filtro,
+    required RemessaModel filtro,
   }) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-    final font = await PdfGoogleFonts.nunitoExtraLight();
+    final netImage = await networkImage(
+        "https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02");
+    // for (BoletoModel boleto in filtro) {
+    //   final codigoDeBarras = await networkImage(
+    //       "https://cors-anywhere.herokuapp.com/https://berrywing.com/barcode/Code128.aspx?bc=${boleto.numeroDeBoleto}");
+    //   final Map<String, dynamic> mapCod = {
+    //     "boleto": boleto.numeroDeBoleto,
+    //     "codigoDeBarras": codigoDeBarras
+    //   };
+    //   listCod.add(mapCod);
+    // }
+    // final Iterable<Future<Map<String, dynamic>>> gerarCodigo =
+    //     filtro.map(_gerarNovoCodigo);
+
+    // final Future<Iterable<Map<String, dynamic>>> waited =
+    //     Future.wait(gerarCodigo);
+    // await waited.then((value) => listCod.addAll(value));
 
     pdf.addPage(
       pw.MultiPage(
+        maxPages: 500,
         pageFormat: format.copyWith(
           marginBottom: 10,
           marginLeft: 20,
@@ -420,14 +643,32 @@ class DesignSystemController extends GetxController {
           marginTop: 20,
         ),
         build: (context) => [
-          pw.SizedBox(
-            height: 20,
-            child: pw.FittedBox(
-              child: pw.Text(title, style: pw.TextStyle(font: font)),
-            ),
+          pw.SizedBox(height: 10),
+          _protocolosListPrintWidget(
+            filtro: filtro,
+            netImage: netImage,
           ),
           pw.SizedBox(height: 10),
-          pw.SizedBox(height: 20),
+        ],
+      ),
+    );
+    pdf.addPage(
+      pw.MultiPage(
+        maxPages: 500,
+        pageFormat: format.copyWith(
+          marginBottom: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 20,
+        ),
+        build: (context) => [
+          pw.SizedBox(height: 10),
+          pw.Text(
+            "Lista para conferencia - ${filtro.nomeArquivo}",
+            style: const pw.TextStyle(fontSize: 12),
+          ),
+          pw.SizedBox(height: 10),
+          _listaConferenciaPrintWidget(filtro: filtro)
         ],
       ),
     );

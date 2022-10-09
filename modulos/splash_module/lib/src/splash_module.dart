@@ -6,7 +6,7 @@ class SplashModule extends Module {
   @override
   List<GetPage> routers = [
     GetPage(
-      name: Routes.initial.caminho,
+      name: Routes.splash.caminho,
       page: () => const SplashPage(),
       bindings: [
         SplashBiding(),

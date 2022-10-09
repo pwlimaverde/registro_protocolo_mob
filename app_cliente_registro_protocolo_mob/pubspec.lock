@@ -443,6 +443,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  remessas_module:
+    dependency: transitive
+    description:
+      path: "../modulos/remessas_module"
+      relative: true
+    source: path
+    version: "0.0.1"
   return_success_or_error:
     dependency: transitive
     description:
