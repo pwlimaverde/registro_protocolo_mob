@@ -91,10 +91,10 @@ _todasRemessasList() {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data)}",
+                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data.toDate())}",
                       ),
                       Text(
-                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload)}",
+                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload.toDate())}",
                       ),
                       Text(
                         "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",

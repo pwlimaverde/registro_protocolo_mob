@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
-import '../../core_module.dart';
+import 'package:dependencies_module/dependencies_module.dart';
 
 class RemessaModel {
   final String nomeArquivo;
-  final DateTime data;
-  final DateTime upload;
+  final Timestamp data;
+  final Timestamp upload;
   final List<BoletoModel> remessa;
   final int quantidadeProtocolos;
   RemessaModel({
@@ -18,8 +17,8 @@ class RemessaModel {
   Map<String, dynamic> toMap() {
     return {
       'nomeArquivo': nomeArquivo,
-      'data': data.millisecondsSinceEpoch,
-      'upload': upload.millisecondsSinceEpoch,
+      'data': data,
+      'upload': upload,
       'remessa': remessa.map((x) => x.toMap()).toList(),
     };
   }
@@ -33,8 +32,8 @@ class RemessaModel {
     // print("#####");
     return RemessaModel(
       nomeArquivo: map['nomeArquivo'] ?? '',
-      data: DateTime.fromMillisecondsSinceEpoch(map['data']),
-      upload: DateTime.fromMillisecondsSinceEpoch(map['upload']),
+      data: map['data'],
+      upload: map['upload'],
       remessa: List<BoletoModel>.from(
           map['remessa']?.map((x) => BoletoModel.fromMap(x))),
     );
@@ -47,7 +46,7 @@ class RemessaModel {
 
   @override
   String toString() =>
-      'RemessaModel(nome do arquivo: $nomeArquivo, upload: $upload, data: ${dataFormatoDDMMYYYY.format(data)}, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
+      'RemessaModel(nome do arquivo: $nomeArquivo, upload: $upload, data: ${dataFormatoDDMMYYYY.format(data.toDate())}, remessa: $remessa, quantidade de protocolos: $quantidadeProtocolos)';
 
   @override
   bool operator ==(Object other) {

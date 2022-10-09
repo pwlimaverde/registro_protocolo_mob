@@ -14,9 +14,9 @@ class BoletoModel {
   final String? formaDeCobranca;
   final Timestamp? dataVencimentoFatura;
   final double? valorFatura;
-  final DateTime? dataEmissaoFatura;
+  final Timestamp? dataEmissaoFatura;
   final String? arquivo;
-  final DateTime? dataImpressaoFatura;
+  final Timestamp? dataImpressaoFatura;
   final String? uf;
   final String? cidade;
   final String? bairro;
@@ -56,11 +56,6 @@ class BoletoModel {
   });
 
   Map<String, dynamic> toMap() {
-    print("!!!!!!!");
-    print(dataVencimentoFatura);
-    print("!!!!!!!");
-    print(dataVencimentoFatura?.toDate());
-    print("!!!!!!!");
     return {
       'ID Cliente': idCliente,
       'Cliente': cliente,
@@ -82,7 +77,7 @@ class BoletoModel {
       'Bairro': bairro,
       'Tipo Logradouro': tipoLogradouro,
       'Logradouro': logradouro,
-      'Numero': numero,
+      'Numero ': numero,
       'CEP': cep,
       'Solicitante da Geração': solicitanteDaGeracao,
       'ID Fatura': idFatura,
@@ -91,17 +86,7 @@ class BoletoModel {
   }
 
   factory BoletoModel.fromMapBase(Map<String, dynamic> map) {
-    // print("*******");
-    // print(map['Data Vencimento Fatura']
-    //     .split(" ")[0]
-    //     .toString()
-    //     .replaceAll("/", "-"));
-    // final data = DateTime.tryParse(
-    //     "${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(6, 10)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(3, 5)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(0, 2)}");
-
-    // print(data);
-    // print("*******");
-    return BoletoModel(
+    final boleto = BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',
       documento: int.tryParse(map['Documento'].toString()) ?? 0,
@@ -115,31 +100,30 @@ class BoletoModel {
       formaDeCobranca: map['Forma de Cobrança'] ?? '',
       dataVencimentoFatura: Timestamp.fromDate(DateTime.parse(
           "${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(6, 10)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(3, 5)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(0, 2)}")),
-      valorFatura: double.tryParse(map['Valor Fatura'].toString()),
-      dataEmissaoFatura: DateTime.tryParse(
+      valorFatura: double.tryParse(
+          map['Valor Fatura'].split(" ")[1].toString().replaceAll(",", ".")),
+      dataEmissaoFatura: Timestamp.fromDate(DateTime.parse(
         "${map['Data Emissao Fatura'].toString().substring(6, 10)}-${map['Data Emissao Fatura'].toString().substring(3, 5)}-${map['Data Emissao Fatura'].toString().substring(0, 2)}",
-      ),
+      )),
       arquivo: map['Arquivo'] ?? '',
-      dataImpressaoFatura: DateTime.tryParse(
+      dataImpressaoFatura: Timestamp.fromDate(DateTime.parse(
         "${map['Data Impressão Fatura'].toString().substring(6, 10)}-${map['Data Impressão Fatura'].toString().substring(3, 5)}-${map['Data Impressão Fatura'].toString().substring(0, 2)}",
-      ),
+      )),
       uf: map['UF'] ?? '',
       cidade: map['Cidade'] ?? '',
       bairro: map['Bairro'] ?? '',
       tipoLogradouro: map['Tipo Logradouro'] ?? '',
       logradouro: map['Logradouro'] ?? '',
-      numero: map['Numero'] ?? 's/n',
+      numero: map['Numero ']?.toString() ?? 's/n',
       cep: map['CEP'] ?? '',
       solicitanteDaGeracao: map['Solicitante da Geração'] ?? '',
       idFatura: int.tryParse(map['ID Fatura'].toString()) ?? 0,
       referencia: map['Referencia'] ?? '',
     );
+    return boleto;
   }
 
   factory BoletoModel.fromMap(Map<String, dynamic> map) {
-    print("######");
-    print(map['Data Vencimento Fatura']);
-    print("#######");
     final boleto = BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',
@@ -153,27 +137,20 @@ class BoletoModel {
       formaDeCobranca: map['Forma de Cobrança'] ?? '',
       dataVencimentoFatura: map['Data Vencimento Fatura'],
       valorFatura: double.tryParse(map['Valor Fatura'].toString()),
-      dataEmissaoFatura: DateTime.tryParse(
-        "${map['Data Emissao Fatura'].toString().substring(6, 10)}-${map['Data Emissao Fatura'].toString().substring(3, 5)}-${map['Data Emissao Fatura'].toString().substring(0, 2)}",
-      ),
+      dataEmissaoFatura: map['Data Emissao Fatura'],
       arquivo: map['Arquivo'] ?? '',
-      dataImpressaoFatura: DateTime.tryParse(
-        "${map['Data Impressão Fatura'].toString().substring(6, 10)}-${map['Data Impressão Fatura'].toString().substring(3, 5)}-${map['Data Impressão Fatura'].toString().substring(0, 2)}",
-      ),
+      dataImpressaoFatura: map['Data Impressão Fatura'],
       uf: map['UF'] ?? '',
       cidade: map['Cidade'] ?? '',
       bairro: map['Bairro'] ?? '',
       tipoLogradouro: map['Tipo Logradouro'] ?? '',
       logradouro: map['Logradouro'] ?? '',
-      numero: map['Numero'] ?? 's/n',
+      numero: map['Numero ']?.toString() ?? 's/n',
       cep: map['CEP'] ?? '',
       solicitanteDaGeracao: map['Solicitante da Geração'] ?? '',
       idFatura: int.tryParse(map['ID Fatura'].toString()) ?? 0,
       referencia: map['Referencia'] ?? '',
     );
-    // print("*******");
-    // print(boleto.dataHabilitacaoContrato);
-    // print("*******");
     return boleto;
   }
 

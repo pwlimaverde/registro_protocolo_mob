@@ -21,8 +21,8 @@ class ProcessamentoDadosArquivoHtmlDatasource
           if (listaBruta.isNotEmpty) {
             final remessa = RemessaModel(
               nomeArquivo: nomeArquivo,
-              data: data,
-              upload: DateTime.now(),
+              data: Timestamp.fromDate(data),
+              upload: Timestamp.fromDate(DateTime.now()),
               remessa: await _processamentoBoleto(
                 listaBruta: listaBruta,
               ),
@@ -31,8 +31,8 @@ class ProcessamentoDadosArquivoHtmlDatasource
           } else {
             final remessa = RemessaModel(
               nomeArquivo: nomeArquivo,
-              data: data,
-              upload: DateTime.now(),
+              data: Timestamp.fromDate(data),
+              upload: Timestamp.fromDate(DateTime.now()),
               remessa: <BoletoModel>[],
             );
             remessasProcessadasError.add(remessa);
@@ -63,9 +63,6 @@ Future<List<BoletoModel>> _processamentoBoleto({
       BoletoModel model = BoletoModel.fromMapBase(boleto);
       boletos.add(model);
     }
-    // print("*******");
-    // print(boletos);
-    // print("*******");
     return boletos;
   } else {
     throw Exception("Erro ao processar arquivo");
