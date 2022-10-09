@@ -4,16 +4,19 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "app_cliente_registro_protocolo_mob",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["--web-renderer html"],
         },
         {
             "name": "app_cliente_registro_protocolo_mob (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": ["--web-renderer html"],
         },
         {
             "name": "app_cliente_registro_protocolo_mob (release mode)",

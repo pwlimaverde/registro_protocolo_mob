@@ -8,7 +8,6 @@ mixin MessagesMixin on GetxController {
     ever<MessageModel?>(message, (model) {
       WidgetsBinding.instance.addPostFrameCallback((duration) async {
         if (model != null) {
-          print(model.message);
           Get.snackbar(model.title, model.message,
               backgroundColor: model.type.color);
         }

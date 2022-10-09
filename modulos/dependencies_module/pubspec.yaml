@@ -25,6 +25,8 @@ dependencies:
     path: ../home_module
   upload_remessa_module:
     path: ../upload_remessa_module
+  remessas_module:
+    path: ../remessas_module
 
   # Package
   upload_arquivo_html_package:

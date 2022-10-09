@@ -7,7 +7,7 @@ class UploadRemessaModule extends Module {
   @override
   List<GetPage> routers = [
     GetPage(
-      name: Routes.initial.caminho,
+      name: Routes.uploadRemessa.caminho,
       transition: Transition.noTransition,
       page: () => const UploadRemessaPage(),
       bindings: [
