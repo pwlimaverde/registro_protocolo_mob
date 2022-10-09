@@ -39,7 +39,12 @@ class RemessasController extends GetxController
     return super.onDelete;
   }
 
-  final listTadasRemessas = <RemessaModel>[].obs;
+  final _listTadasRemessas = <RemessaModel>[].obs;
+
+  List<RemessaModel> get listTadasRemessas => _listTadasRemessas
+    ..sort(
+      (a, b) => b.data.compareTo(a.data),
+    );
 
   void _clearLists() {
     listTadasRemessas.clear();
@@ -61,7 +66,7 @@ class RemessasController extends GetxController
     );
 
     if (uploadFirebase.status == StatusResult.success) {
-      listTadasRemessas.bindStream(uploadFirebase.result);
+      _listTadasRemessas.bindStream(uploadFirebase.result);
     }
   }
 

@@ -55,9 +55,24 @@ class UploadRemessaController extends GetxController
     return super.onDelete;
   }
 
-  final uploadRemessaList = <RemessaModel>[].obs;
-  final duplicadasRemessaList = <RemessaModel>[].obs;
-  final uploadRemessaListError = <RemessaModel>[].obs;
+  final _uploadRemessaList = <RemessaModel>[].obs;
+  final _duplicadasRemessaList = <RemessaModel>[].obs;
+  final _uploadRemessaListError = <RemessaModel>[].obs;
+
+  List<RemessaModel> get uploadRemessaList => _uploadRemessaList
+    ..sort(
+      (a, b) => b.data.compareTo(a.data),
+    );
+
+  List<RemessaModel> get duplicadasRemessaList => _duplicadasRemessaList
+    ..sort(
+      (a, b) => b.data.compareTo(a.data),
+    );
+
+  List<RemessaModel> get uploadRemessaListError => _uploadRemessaListError
+    ..sort(
+      (a, b) => b.data.compareTo(a.data),
+    );
 
   void _clearLists() {
     uploadRemessaList.clear();
@@ -164,10 +179,10 @@ class UploadRemessaController extends GetxController
         ),
       );
       if (listRemessasDuplicadas.isNotEmpty) {
-        duplicadasRemessaList(listRemessasDuplicadas);
+        _duplicadasRemessaList(listRemessasDuplicadas);
       }
       if (listRemessaError.isNotEmpty) {
-        uploadRemessaListError(listRemessaError);
+        _uploadRemessaListError(listRemessaError);
       }
       if (listRemessasNovas.isNotEmpty) {
         return listRemessasNovas;
@@ -208,7 +223,7 @@ class UploadRemessaController extends GetxController
           message: "Upload de ${novasRemessas.length} Remessa com Sucesso!",
         ),
       );
-      uploadRemessaList(novasRemessas);
+      _uploadRemessaList(novasRemessas);
     }
   }
 

@@ -7,7 +7,7 @@ class RemessasModule extends Module {
   @override
   List<GetPage> routers = [
     GetPage(
-      name: Routes.initial.caminho,
+      name: Routes.remessas.caminho,
       transition: Transition.noTransition,
       page: () => const RemessasPage(),
       bindings: [

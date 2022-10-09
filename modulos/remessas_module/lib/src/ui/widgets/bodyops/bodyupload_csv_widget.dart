@@ -12,14 +12,6 @@ class BodyUploadRemessaWidget extends StatelessWidget {
         color: Colors.black12,
         child: Center(
           child: Obx(() {
-            // if (remessasController.uploadRemessaOpsList.isNotEmpty ||
-            //     remessasController.updateCsvOpsList.isNotEmpty ||
-            //     remessasController.duplicadasCsvOpsList.isNotEmpty ||
-            //     remessasController.uploadRemessaOpsListError.isNotEmpty) {
-            //   coreModuleController.statusLoad(false);
-            // } else {
-            //   coreModuleController.statusLoad(true);
-            // }
             return Column(
               children: <Widget>[
                 _tabBar(),
@@ -75,7 +67,6 @@ _todasRemessasList() {
         itemCount: filtro.length,
         itemBuilder: (context, index) {
           final remessaModel = filtro[index];
-          double size = coreModuleController.sizeW;
           String nomeRemessa = remessaModel.nomeArquivo.length >= 100
               ? remessaModel.nomeArquivo.substring(0, 100)
               : remessaModel.nomeArquivo;
@@ -99,23 +90,10 @@ _todasRemessasList() {
                       Text(
                         "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",
                       ),
-                      // Image.network(
-                      //     "https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02"),
                     ],
                   ),
                   trailing: designSystemController.iconButtonPrint(
                       filtro: remessaModel),
-
-                  // IconButton(
-                  //   padding: const EdgeInsets.all(0),
-                  //   alignment: Alignment.centerLeft,
-                  //   icon: const Icon(
-                  //     size: 40,
-                  //     Icons.print,
-                  //     color: Colors.grey,
-                  //   ),
-                  //   onPressed: (() => {}),
-                  // ),
                 ),
               ),
             ),
@@ -124,45 +102,4 @@ _todasRemessasList() {
       ),
     ),
   );
-  // return designSystemController.opslistWidget(
-  //   filtro: remessasController.uploadRemessaOpsList,
-  //   can: opsController.setCancelarOP,
-  //   check: opsController.setCheckOP,
-  //   save: opsController.setInfoOP,
-  //   prioridade: opsController.setPrioridadeOP,
-  //   up: true,
-  // );
 }
-
-// _updateOpsList() {
-//   return designSystemController.opslistWidget(
-//     filtro: remessasController.updateCsvOpsList,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
-
-// _duplicadasOpsList() {
-//   return designSystemController.opslistWidget(
-//     filtro: remessasController.duplicadasCsvOpsList,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
-
-// _uploadOpsListError() {
-//   return designSystemController.opslistWidget(
-//     filtro: remessasController.uploadRemessaOpsListError,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }

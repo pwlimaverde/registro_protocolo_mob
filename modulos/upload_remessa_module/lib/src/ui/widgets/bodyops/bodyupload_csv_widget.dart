@@ -59,57 +59,146 @@ _tabBarView() {
     child: TabBarView(
       controller: uploadRemessaController.tabController,
       children: [
+        _uploadRemessaList(),
+        _duplicadasRemessaList(),
         Center(),
-        Center(),
-        Center(),
-        // _uploadOpsList(),
-        // _duplicadasOpsList(),
-        // _uploadOpsListError(),
       ],
     ),
   );
 }
 
-// _uploadOpsList() {
-//   return designSystemController.opslistWidget(
-//     filtro: uploadRemessaController.uploadRemessaOpsList,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
+_uploadRemessaList() {
+  final filtro = uploadRemessaController.uploadRemessaList;
 
-// _updateOpsList() {
-//   return designSystemController.opslistWidget(
-//     filtro: uploadRemessaController.updateCsvOpsList,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
+  return Obx(
+    () => Center(
+      child: ListView.builder(
+        itemCount: filtro.length,
+        itemBuilder: (context, index) {
+          final remessaModel = filtro[index];
+          String nomeRemessa = remessaModel.nomeArquivo.length >= 100
+              ? remessaModel.nomeArquivo.substring(0, 100)
+              : remessaModel.nomeArquivo;
+          return Center(
+            child: Card(
+              elevation: 0.5,
+              child: SizedBox(
+                width: 550,
+                child: ListTile(
+                  title: Text(nomeRemessa),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data.toDate())}",
+                      ),
+                      Text(
+                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload.toDate())}",
+                      ),
+                      Text(
+                        "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",
+                      ),
+                    ],
+                  ),
+                  trailing: designSystemController.iconButtonPrint(
+                      filtro: remessaModel),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
 
-// _duplicadasOpsList() {
-//   return designSystemController.opslistWidget(
-//     filtro: uploadRemessaController.duplicadasCsvOpsList,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
+_duplicadasRemessaList() {
+  final filtro = uploadRemessaController.duplicadasRemessaList;
 
-// _uploadOpsListError() {
-//   return designSystemController.opslistWidget(
-//     filtro: uploadRemessaController.uploadRemessaOpsListError,
-//     can: opsController.setCancelarOP,
-//     check: opsController.setCheckOP,
-//     save: opsController.setInfoOP,
-//     prioridade: opsController.setPrioridadeOP,
-//     up: true,
-//   );
-// }
+  return Obx(
+    () => Center(
+      child: ListView.builder(
+        itemCount: filtro.length,
+        itemBuilder: (context, index) {
+          final remessaModel = filtro[index];
+          String nomeRemessa = remessaModel.nomeArquivo.length >= 100
+              ? remessaModel.nomeArquivo.substring(0, 100)
+              : remessaModel.nomeArquivo;
+          return Center(
+            child: Card(
+              elevation: 0.5,
+              child: SizedBox(
+                width: 550,
+                child: ListTile(
+                  title: Text(nomeRemessa),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data.toDate())}",
+                      ),
+                      Text(
+                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload.toDate())}",
+                      ),
+                      Text(
+                        "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",
+                      ),
+                    ],
+                  ),
+                  trailing: designSystemController.iconButtonPrint(
+                      filtro: remessaModel),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
+_uploadRemessaListError() {
+  final filtro = uploadRemessaController.uploadRemessaListError;
+
+  return Obx(
+    () => Center(
+      child: ListView.builder(
+        itemCount: filtro.length,
+        itemBuilder: (context, index) {
+          final remessaModel = filtro[index];
+          String nomeRemessa = remessaModel.nomeArquivo.length >= 100
+              ? remessaModel.nomeArquivo.substring(0, 100)
+              : remessaModel.nomeArquivo;
+          return Center(
+            child: Card(
+              elevation: 0.5,
+              child: SizedBox(
+                width: 550,
+                child: ListTile(
+                  title: Text(nomeRemessa),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data.toDate())}",
+                      ),
+                      Text(
+                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload.toDate())}",
+                      ),
+                      Text(
+                        "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
