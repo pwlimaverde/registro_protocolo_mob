@@ -104,7 +104,7 @@ _todasRemessasList() {
                     ],
                   ),
                   trailing: designSystemController.iconButtonPrint(
-                      filtro: remessaModel.remessa),
+                      filtro: remessaModel),
 
                   // IconButton(
                   //   padding: const EdgeInsets.all(0),

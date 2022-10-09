@@ -112,7 +112,7 @@ class DesignSystemController extends GetxController {
   //   );
   // }
 
-  Widget iconButtonPrint({required List<BoletoModel> filtro}) {
+  Widget iconButtonPrint({required RemessaModel filtro}) {
     return IconButton(
       padding: const EdgeInsets.all(0),
       alignment: Alignment.centerLeft,
@@ -382,7 +382,7 @@ class DesignSystemController extends GetxController {
   //   return PdfColors.grey100;
   // }
 
-  _showPrintDialog({required List<BoletoModel> filtro}) {
+  _showPrintDialog({required RemessaModel filtro}) {
     return Get.dialog(
       AlertDialog(
         title: const Text("Impressão da listagem dos Protoclos"),
@@ -405,7 +405,7 @@ class DesignSystemController extends GetxController {
   }
 
   pw.Widget _protocolosListPrintWidget({
-    required List<BoletoModel> filtro,
+    required RemessaModel filtro,
     required dynamic netImage,
   }) {
     return pw.SizedBox(
@@ -414,25 +414,86 @@ class DesignSystemController extends GetxController {
         proporcao: 55,
       ),
       child: pw.ListView.builder(
-          itemCount: filtro.length,
+          itemCount: filtro.remessa.length,
           itemBuilder: (context, index) {
-            final boletoModel = filtro[index];
+            final boletoModel = filtro.remessa[index];
             return pw.Container(
+              // color: PdfColors.amber,
               width: coreModuleController.getSizeProporcao(
                 size: coreModuleController.size,
                 proporcao: 50,
               ),
-              height: 190,
+              height: 195,
               child: pw.Stack(
                 children: [
-                  pw.Center(
-                    child: pw.Image(netImage),
+                  pw.Column(
+                    children: [
+                      pw.Center(
+                        child: pw.Image(netImage),
+                      ),
+                      pw.SizedBox(height: 2),
+                      pw.Text(
+                        filtro.nomeArquivo,
+                        style: const pw.TextStyle(fontSize: 6),
+                      ),
+                    ],
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    mainAxisAlignment: pw.MainAxisAlignment.end,
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(152, 35, 22, 10),
+                    child: pw.Container(
+                      width: 325,
+                      // color: PdfColors.red,
+                      child: pw.Text(
+                        "${boletoModel.cliente.toString()} - B. ${boletoModel.bairro.toString()} - ${boletoModel.cidade.toString()} / ${boletoModel.uf.toString()} ${boletoModel.tipoLogradouro.toString()} ${boletoModel.logradouro.toString()}, N.:${boletoModel.numero.toString()} - CEP: ${boletoModel.cep.toString()}",
+                        style: const pw.TextStyle(fontSize: 9),
+                      ),
+                    ),
                   ),
                   _codigoDeBarras(
                     data: boletoModel.numeroDeBoleto.toString(),
                   ),
-                  pw.Text(dataFormatoDDMMYYYY
-                      .format(boletoModel.dataVencimentoFatura!.toDate())),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(15, 60, 22, 10),
+                    child: pw.Align(
+                      alignment: pw.Alignment.topRight,
+                      child: pw.Text(
+                        dataFormatoDDMMYYYY.format(
+                          boletoModel.dataVencimentoFatura!.toDate(),
+                        ),
+                        style: const pw.TextStyle(fontSize: 9),
+                      ),
+                    ),
+                  ),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.fromLTRB(6, 35, 5, 10),
+                    child: pw.Align(
+                      alignment: pw.Alignment.bottomLeft,
+                      child: pw.Container(
+                        width: 127,
+                        // color: PdfColors.amber,
+                        child: pw.Column(
+                          children: [
+                            pw.Text(
+                              boletoModel.idCliente.toString(),
+                              style: const pw.TextStyle(fontSize: 10),
+                            ),
+                            pw.Text(
+                              "${boletoModel.cliente.toString()} - B. ${boletoModel.bairro.toString()} - ${boletoModel.cidade.toString()} / ${boletoModel.uf.toString()} ${boletoModel.tipoLogradouro.toString()} ${boletoModel.logradouro.toString()}, N.:${boletoModel.numero.toString()} - CEP: ${boletoModel.cep.toString()} - REF.: ${boletoModel.referencia.toString()}",
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                            pw.Text(
+                              "Remetente:\nMOBTELECOM\nAV. Abolição, 4140 - Mucuripe\nFortaleza - CE\n60165-082",
+                              style: const pw.TextStyle(fontSize: 8),
+                            ),
+                          ],
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
@@ -485,8 +546,51 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  pw.Widget _listaConferenciaPrintWidget({
+    required RemessaModel filtro,
+  }) {
+    return pw.SizedBox(
+      width: coreModuleController.getSizeProporcao(
+        size: coreModuleController.size,
+        proporcao: 55,
+      ),
+      child: pw.ListView.builder(
+          itemCount: filtro.remessa.length,
+          itemBuilder: (context, index) {
+            final boletoModel = filtro.remessa[index];
+            return pw.Container(
+              decoration: const pw.BoxDecoration(
+                color: PdfColors.white,
+                border: pw.Border(
+                  top: pw.BorderSide(width: 0.5, color: PdfColors.black),
+                  bottom: pw.BorderSide(width: 0.5, color: PdfColors.black),
+                ),
+              ),
+              width: coreModuleController.getSizeProporcao(
+                size: coreModuleController.size,
+                proporcao: 50,
+              ),
+              height: 12,
+              child: pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    "${(index + 1)} - ${boletoModel.cliente} - Doc.: ${boletoModel.documento.toString()}",
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                  pw.Text(
+                    "Boleto: ${boletoModel.numeroDeBoleto.toString()}",
+                    style: const pw.TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
   _pdf2({
-    required List<BoletoModel> filtro,
+    required RemessaModel filtro,
     required String titulo,
   }) {
     return PdfPreview(
@@ -508,7 +612,7 @@ class DesignSystemController extends GetxController {
   Future<Uint8List> _generatePdf2({
     required PdfPageFormat format,
     required String title,
-    required List<BoletoModel> filtro,
+    required RemessaModel filtro,
   }) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final netImage = await networkImage(
@@ -531,6 +635,7 @@ class DesignSystemController extends GetxController {
 
     pdf.addPage(
       pw.MultiPage(
+        maxPages: 500,
         pageFormat: format.copyWith(
           marginBottom: 10,
           marginLeft: 20,
@@ -544,6 +649,26 @@ class DesignSystemController extends GetxController {
             netImage: netImage,
           ),
           pw.SizedBox(height: 10),
+        ],
+      ),
+    );
+    pdf.addPage(
+      pw.MultiPage(
+        maxPages: 500,
+        pageFormat: format.copyWith(
+          marginBottom: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 20,
+        ),
+        build: (context) => [
+          pw.SizedBox(height: 10),
+          pw.Text(
+            "Lista para conferencia - ${filtro.nomeArquivo}",
+            style: const pw.TextStyle(fontSize: 12),
+          ),
+          pw.SizedBox(height: 10),
+          _listaConferenciaPrintWidget(filtro: filtro)
         ],
       ),
     );
