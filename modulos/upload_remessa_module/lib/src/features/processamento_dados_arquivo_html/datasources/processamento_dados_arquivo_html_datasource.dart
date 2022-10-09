@@ -42,6 +42,7 @@ class ProcessamentoDadosArquivoHtmlDatasource
           "remessasProcessadas": remessasProcessadas,
           "remessasProcessadasError": remessasProcessadasError,
         };
+
         return remessas;
       } else {
         throw Exception("Erro ao processar arquivo");
@@ -59,9 +60,12 @@ Future<List<BoletoModel>> _processamentoBoleto({
 
   if (listaBruta.isNotEmpty) {
     for (Map<String, String> boleto in listaBruta) {
-      BoletoModel model = BoletoModel.fromMap(boleto);
+      BoletoModel model = BoletoModel.fromMapBase(boleto);
       boletos.add(model);
     }
+    // print("*******");
+    // print(boletos);
+    // print("*******");
     return boletos;
   } else {
     throw Exception("Erro ao processar arquivo");

@@ -25,6 +25,12 @@ class RemessaModel {
   }
 
   factory RemessaModel.fromMap(Map<String, dynamic> map) {
+    // print("#####");
+    // print(map['data']);
+    // print("#####");
+    // print("#####");
+    // print(DateTime.fromMillisecondsSinceEpoch(map['data']));
+    // print("#####");
     return RemessaModel(
       nomeArquivo: map['nomeArquivo'] ?? '',
       data: DateTime.fromMillisecondsSinceEpoch(map['data']),

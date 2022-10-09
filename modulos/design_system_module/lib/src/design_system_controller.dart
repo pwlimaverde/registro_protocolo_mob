@@ -1,7 +1,9 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:dependencies_module/dependencies_module.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
@@ -17,6 +19,13 @@ import 'widgets/menu/menu_widget.dart';
 import 'widgets/right/right_widget.dart';
 
 class DesignSystemController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    // getModelo();
+  }
+
   //Widgets Pages
   Scaffold scaffold({
     required Widget body,
@@ -64,6 +73,19 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  // getModelo() async {
+  //   final storage = FirebaseStorage.instance;
+  //   final modeloURL =
+  //       await storage.ref().child("/modelo/BASE-PROTOCOLO-MOB.jpeg").getData();
+  //   print(modeloURL);
+
+  //   final modeloURL2 = await storage
+  //       .ref()
+  //       .child("/modelo/BASE-PROTOCOLO-MOB.jpeg")
+  //       .getData();
+  //   print(modeloURL);
+  // }
+
   // Widget _iconButtonSearch() {
   //   return Obx(
   //     () {
@@ -90,22 +112,20 @@ class DesignSystemController extends GetxController {
   //   );
   // }
 
-  // Widget _iconButtonPrint() {
-  //   return Obx(
-  //     () {
-  //       return opsController.indexPrint.value != 4
-  //           ? BotaoPrint(
-  //               size: 20,
-  //               ativo: true,
-  //               onPressed: _showPrintDialog,
-  //             )
-  //           : const BotaoPrint(
-  //               size: 20,
-  //               ativo: false,
-  //             );
-  //     },
-  //   );
-  // }
+  Widget iconButtonPrint({required List<BoletoModel> filtro}) {
+    return IconButton(
+      padding: const EdgeInsets.all(0),
+      alignment: Alignment.centerLeft,
+      icon: const Icon(
+        size: 40,
+        Icons.print,
+        color: Colors.grey,
+      ),
+      onPressed: (() {
+        _showPrintDialog(filtro: filtro);
+      }),
+    );
+  }
 
   Widget _iconButtonUpload() {
     return BotaoUpload(
@@ -170,14 +190,6 @@ class DesignSystemController extends GetxController {
       ),
     );
   }
-
-  // pw.Widget opslistPrintWidget({
-  //   required filtro,
-  // }) {
-  //   return OpslistPrintWidget(
-  //     filtro: filtro,
-  //   );
-  // }
 
   //Widgets OpsList
   // Widget opslistWidget({
@@ -370,28 +382,108 @@ class DesignSystemController extends GetxController {
   //   return PdfColors.grey100;
   // }
 
-  // _showPrintDialog() {
-  //   return Get.dialog(
-  //     AlertDialog(
-  //       title: const Text("Impressão da listagem das Ops"),
-  //       content: SizedBox(
-  //         width: coreModuleController.getSizeProporcao(
-  //           size: coreModuleController.size,
-  //           proporcao: 60,
-  //         ),
-  //         height: coreModuleController.getSizeProporcao(
-  //           size: coreModuleController.sizeH,
-  //           proporcao: 60,
-  //         ),
-  //         child: _pdf2(
-  //           filtro: opsController.filtroPrint,
-  //           titulo: opsController.myTabs[opsController.indexPrint.value].text
-  //               .toString(),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  _showPrintDialog({required List<BoletoModel> filtro}) {
+    return Get.dialog(
+      AlertDialog(
+        title: const Text("Impressão da listagem dos Protoclos"),
+        content: SizedBox(
+          width: coreModuleController.getSizeProporcao(
+            size: coreModuleController.size,
+            proporcao: 75,
+          ),
+          height: coreModuleController.getSizeProporcao(
+            size: coreModuleController.sizeH,
+            proporcao: 75,
+          ),
+          child: _pdf2(
+            filtro: filtro,
+            titulo: "Lista de boletos",
+          ),
+        ),
+      ),
+    );
+  }
+
+  pw.Widget _protocolosListPrintWidget({
+    required List<BoletoModel> filtro,
+    required dynamic netImage,
+  }) {
+    return pw.SizedBox(
+      width: coreModuleController.getSizeProporcao(
+        size: coreModuleController.size,
+        proporcao: 55,
+      ),
+      child: pw.ListView.builder(
+          itemCount: filtro.length,
+          itemBuilder: (context, index) {
+            final boletoModel = filtro[index];
+            print(boletoModel.dataHabilitacaoContrato);
+            return pw.Container(
+              width: coreModuleController.getSizeProporcao(
+                size: coreModuleController.size,
+                proporcao: 50,
+              ),
+              height: 190,
+              child: pw.Stack(
+                children: [
+                  pw.Center(
+                    child: pw.Image(netImage),
+                  ),
+                  _codigoDeBarras(
+                    data: boletoModel.numeroDeBoleto.toString(),
+                  ),
+                  pw.Text(boletoModel.dataVencimentoFatura.toString()),
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
+  pw.Widget _codigoDeBarras({
+    required String data,
+  }) {
+    final double larguraCodigoDeBarras =
+        (data.toString().length * 10.5).toDouble();
+    return pw.Padding(
+      padding: const pw.EdgeInsets.fromLTRB(10, 10, 10, 80),
+      child: pw.Container(
+        // color: PdfColors.red100,
+        child: pw.Row(
+          children: [
+            pw.Align(
+                alignment: pw.Alignment.bottomLeft,
+                child: pw.SizedBox(
+                  child: pw.BarcodeWidget(
+                    data: data.toString(),
+                    width: larguraCodigoDeBarras,
+                    height: 45,
+                    barcode: pw.Barcode.code128(),
+                    drawText: true,
+                  ),
+                  width: larguraCodigoDeBarras,
+                  height: 45,
+                )),
+            pw.SizedBox(width: 10),
+            pw.SizedBox(
+              child: pw.BarcodeWidget(
+                data: data.toString(),
+                width: 45,
+                height: 45,
+                barcode: pw.Barcode.qrCode(),
+                drawText: false,
+              ),
+              width: 45,
+              height: 45,
+            ),
+            pw.SizedBox(width: 126),
+          ],
+          crossAxisAlignment: pw.CrossAxisAlignment.end,
+          mainAxisAlignment: pw.MainAxisAlignment.end,
+        ),
+      ),
+    );
+  }
 
   _pdf2({
     required List<BoletoModel> filtro,
@@ -403,13 +495,39 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  // Future<Map<String, dynamic>> _gerarNovoCodigo(BoletoModel model) async {
+  //   final codigoDeBarras = await networkImage(
+  //       "https://cors-anywhere.herokuapp.com/https://berrywing.com/barcode/Code128.aspx?bc=${model.numeroDeBoleto}");
+  //   final Map<String, dynamic> mapCod = {
+  //     "boleto": model.numeroDeBoleto,
+  //     "codigoDeBarras": codigoDeBarras
+  //   };
+  //   return mapCod;
+  // }
+
   Future<Uint8List> _generatePdf2({
     required PdfPageFormat format,
     required String title,
     required List<BoletoModel> filtro,
   }) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-    final font = await PdfGoogleFonts.nunitoExtraLight();
+    final netImage = await networkImage(
+        "https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02");
+    // for (BoletoModel boleto in filtro) {
+    //   final codigoDeBarras = await networkImage(
+    //       "https://cors-anywhere.herokuapp.com/https://berrywing.com/barcode/Code128.aspx?bc=${boleto.numeroDeBoleto}");
+    //   final Map<String, dynamic> mapCod = {
+    //     "boleto": boleto.numeroDeBoleto,
+    //     "codigoDeBarras": codigoDeBarras
+    //   };
+    //   listCod.add(mapCod);
+    // }
+    // final Iterable<Future<Map<String, dynamic>>> gerarCodigo =
+    //     filtro.map(_gerarNovoCodigo);
+
+    // final Future<Iterable<Map<String, dynamic>>> waited =
+    //     Future.wait(gerarCodigo);
+    // await waited.then((value) => listCod.addAll(value));
 
     pdf.addPage(
       pw.MultiPage(
@@ -420,14 +538,12 @@ class DesignSystemController extends GetxController {
           marginTop: 20,
         ),
         build: (context) => [
-          pw.SizedBox(
-            height: 20,
-            child: pw.FittedBox(
-              child: pw.Text(title, style: pw.TextStyle(font: font)),
-            ),
+          pw.SizedBox(height: 10),
+          _protocolosListPrintWidget(
+            filtro: filtro,
+            netImage: netImage,
           ),
           pw.SizedBox(height: 10),
-          pw.SizedBox(height: 20),
         ],
       ),
     );

@@ -4,22 +4,19 @@
     // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "name": "app_cliente_registro_protocolo_mob",
+            "name": "design_system_module",
             "request": "launch",
-            "type": "dart",
-            "args": ["--web-renderer html"],
+            "type": "dart"
         },
         {
-            "name": "app_cliente_registro_protocolo_mob (profile mode)",
+            "name": "design_system_module (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile",
-            "args": ["--web-renderer html"],
+            "flutterMode": "profile"
         },
         {
-            "name": "app_cliente_registro_protocolo_mob (release mode)",
+            "name": "design_system_module (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

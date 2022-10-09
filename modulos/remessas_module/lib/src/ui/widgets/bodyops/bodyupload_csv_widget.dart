@@ -75,26 +75,47 @@ _todasRemessasList() {
         itemCount: filtro.length,
         itemBuilder: (context, index) {
           final remessaModel = filtro[index];
-          double size = coreModuleController.size;
+          double size = coreModuleController.sizeW;
           String nomeRemessa = remessaModel.nomeArquivo.length >= 100
               ? remessaModel.nomeArquivo.substring(0, 100)
               : remessaModel.nomeArquivo;
-          return Card(
-            elevation: 0.5,
-            child: SizedBox(
-              width: size,
-              height: 60,
-              child: ListTile(
-                title: Text(nomeRemessa),
-                subtitle: Text(
-                    "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data)}"),
-                trailing: Column(
-                  children: [
-                    Text(
-                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload)}"),
-                    Text(
-                        "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}"),
-                  ],
+          return Center(
+            child: Card(
+              elevation: 0.5,
+              child: SizedBox(
+                width: 550,
+                child: ListTile(
+                  title: Text(nomeRemessa),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Data da Remessa: ${dataFormatoDDMMYYYY.format(remessaModel.data)}",
+                      ),
+                      Text(
+                        "Data de Upload: ${dataFormatoDDMMYYYY.format(remessaModel.upload)}",
+                      ),
+                      Text(
+                        "Quantidade de Protocolos: ${remessaModel.quantidadeProtocolos.toString()}",
+                      ),
+                      // Image.network(
+                      //     "https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02"),
+                    ],
+                  ),
+                  trailing: designSystemController.iconButtonPrint(
+                      filtro: remessaModel.remessa),
+
+                  // IconButton(
+                  //   padding: const EdgeInsets.all(0),
+                  //   alignment: Alignment.centerLeft,
+                  //   icon: const Icon(
+                  //     size: 40,
+                  //     Icons.print,
+                  //     color: Colors.grey,
+                  //   ),
+                  //   onPressed: (() => {}),
+                  // ),
                 ),
               ),
             ),
