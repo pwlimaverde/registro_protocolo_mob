@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dependencies_module/dependencies_module.dart';
 
 class BoletoModel {
   final int idCliente;
@@ -8,7 +9,7 @@ class BoletoModel {
   final int? telefoneFixo;
   final int? telefoneMovel;
   final int idContrato;
-  final DateTime? dataHabilitacaoContrato;
+  final Timestamp? dataHabilitacaoContrato;
   final String? numeroDeBoleto;
   final String? formaDeCobranca;
   final DateTime? dataVencimentoFatura;
@@ -55,6 +56,11 @@ class BoletoModel {
   });
 
   Map<String, dynamic> toMap() {
+    print("!!!!!!!");
+    print(dataHabilitacaoContrato);
+    print("!!!!!!!");
+    print(dataHabilitacaoContrato?.toDate());
+    print("!!!!!!!");
     return {
       'ID Cliente': idCliente,
       'Cliente': cliente,
@@ -63,8 +69,7 @@ class BoletoModel {
       'Telefone Fixo': telefoneFixo,
       'Telefone Movel': telefoneMovel,
       'ID Contrato': idContrato,
-      'Data Habilitacao contrato':
-          dataHabilitacaoContrato?.millisecondsSinceEpoch,
+      'Data Habilitacao contrato': dataHabilitacaoContrato,
       'Número de Boleto': numeroDeBoleto,
       'Forma de Cobrança': formaDeCobranca,
       'Data Vencimento Fatura': dataVencimentoFatura,
@@ -97,8 +102,8 @@ class BoletoModel {
       telefoneFixo: int.tryParse(map['Telefone Fixo'].toString()) ?? 0,
       telefoneMovel: int.tryParse(map['Telefone Movel'].toString()) ?? 0,
       idContrato: int.tryParse(map['ID Contrato'].toString()) ?? 0,
-      dataHabilitacaoContrato:
-          DateTime.tryParse(map['Data Habilitacao contrato'].split(" ")[0]),
+      dataHabilitacaoContrato: Timestamp.fromDate(
+          DateTime.parse(map['Data Habilitacao contrato'].split(" ")[0])),
       numeroDeBoleto: map['Número de Boleto'] ?? '',
       formaDeCobranca: map['Forma de Cobrança'] ?? '',
       dataVencimentoFatura:
@@ -125,6 +130,9 @@ class BoletoModel {
   }
 
   factory BoletoModel.fromMap(Map<String, dynamic> map) {
+    print("######");
+    print(map['Data Habilitacao contrato']);
+    print("#######");
     final boleto = BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',
@@ -133,8 +141,7 @@ class BoletoModel {
       telefoneFixo: int.tryParse(map['Telefone Fixo'].toString()) ?? 0,
       telefoneMovel: int.tryParse(map['Telefone Movel'].toString()) ?? 0,
       idContrato: int.tryParse(map['ID Contrato'].toString()) ?? 0,
-      dataHabilitacaoContrato: DateTime.fromMillisecondsSinceEpoch(
-          map['Data Habilitacao contrato'].seconds * 1000),
+      dataHabilitacaoContrato: map['Data Habilitacao contrato'],
       numeroDeBoleto: map['Número de Boleto'] ?? '',
       formaDeCobranca: map['Forma de Cobrança'] ?? '',
       dataVencimentoFatura:
@@ -158,9 +165,9 @@ class BoletoModel {
       idFatura: int.tryParse(map['ID Fatura'].toString()) ?? 0,
       referencia: map['Referencia'] ?? '',
     );
-    print("*******");
-    print(boleto.dataHabilitacaoContrato);
-    print("*******");
+    // print("*******");
+    // print(boleto.dataHabilitacaoContrato);
+    // print("*******");
     return boleto;
   }
 
