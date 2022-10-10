@@ -63,6 +63,8 @@ class MapeamentoDadosArquivoHtmlDatasource
       final DateTime dataProcessada = DateTime.parse(listXlsx[0].last);
       mapXlsx.addAll({"data da remessa": dataProcessada});
 
+      mapXlsx.addAll({"tipo do arquivo": "xlsx"});
+
       listaDados.addAll(listXlsx);
       listaDados.removeRange(0, 2);
 
@@ -111,6 +113,7 @@ class MapeamentoDadosArquivoHtmlDatasource
         "${listCsv[0].last.substring(6, 10)}-${listCsv[0].last.substring(3, 5)}-${listCsv[0].last.substring(0, 2)}",
       );
       mapCsv.addAll({"data da remessa": dataProcessada});
+      mapCsv.addAll({"tipo do arquivo": "csv"});
 
       listaDados.addAll(listCsv);
       listaDados.removeRange(0, 2);
