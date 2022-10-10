@@ -1,5 +1,7 @@
+## [0.0.2] - 09/10/2022 
+Correcao de bug no upload xlsx
 ## [0.0.1-1] - 09/10/2022 
-Ajiste documentação
+Ajuste documentação
 ## [0.0.1] - 09/10/2022 
 Primeiro release 
 ## [0.0.0-alpha.1] - 11/09/2022 
