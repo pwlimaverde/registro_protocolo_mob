@@ -616,7 +616,7 @@ class DesignSystemController extends GetxController {
   }) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
     final netImage = await networkImage(
-        "https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02");
+        "https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02");
     // for (BoletoModel boleto in filtro) {
     //   final codigoDeBarras = await networkImage(
     //       "https://cors-anywhere.herokuapp.com/https://berrywing.com/barcode/Code128.aspx?bc=${boleto.numeroDeBoleto}");
