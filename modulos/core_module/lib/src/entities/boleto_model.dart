@@ -85,7 +85,7 @@ class BoletoModel {
     };
   }
 
-  factory BoletoModel.fromMapBase(Map<String, dynamic> map) {
+  factory BoletoModel.fromMapCsv(Map<String, dynamic> map) {
     final boleto = BoletoModel(
       idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
       cliente: map['Cliente'] ?? '',
@@ -102,6 +102,43 @@ class BoletoModel {
           "${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(6, 10)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(3, 5)}-${map['Data Vencimento Fatura'].toString().replaceAll("/", "-").substring(0, 2)}")),
       valorFatura: double.tryParse(
           map['Valor Fatura'].split(" ")[1].toString().replaceAll(",", ".")),
+      dataEmissaoFatura: Timestamp.fromDate(DateTime.parse(
+        "${map['Data Emissao Fatura'].toString().substring(6, 10)}-${map['Data Emissao Fatura'].toString().substring(3, 5)}-${map['Data Emissao Fatura'].toString().substring(0, 2)}",
+      )),
+      arquivo: map['Arquivo'] ?? '',
+      dataImpressaoFatura: Timestamp.fromDate(DateTime.parse(
+        "${map['Data Impressão Fatura'].toString().substring(6, 10)}-${map['Data Impressão Fatura'].toString().substring(3, 5)}-${map['Data Impressão Fatura'].toString().substring(0, 2)}",
+      )),
+      uf: map['UF'] ?? '',
+      cidade: map['Cidade'] ?? '',
+      bairro: map['Bairro'] ?? '',
+      tipoLogradouro: map['Tipo Logradouro'] ?? '',
+      logradouro: map['Logradouro'] ?? '',
+      numero: map['Numero ']?.toString() ?? 's/n',
+      cep: map['CEP'] ?? '',
+      solicitanteDaGeracao: map['Solicitante da Geração'] ?? '',
+      idFatura: int.tryParse(map['ID Fatura'].toString()) ?? 0,
+      referencia: map['Referencia'] ?? '',
+    );
+    return boleto;
+  }
+
+  factory BoletoModel.fromMapXlsx(Map<String, dynamic> map) {
+    final boleto = BoletoModel(
+      idCliente: int.tryParse(map['ID Cliente'].toString()) ?? 0,
+      cliente: map['Cliente'] ?? '',
+      documento: int.tryParse(map['Documento'].toString()) ?? 0,
+      email: map['Email'] ?? '',
+      telefoneFixo: int.tryParse(map['Telefone Fixo'].toString()) ?? 0,
+      telefoneMovel: int.tryParse(map['Telefone Movel'].toString()) ?? 0,
+      idContrato: int.tryParse(map['ID Contrato'].toString()) ?? 0,
+      dataHabilitacaoContrato: Timestamp.fromDate(
+          DateTime.parse(map['Data Habilitacao contrato'].split(" ")[0])),
+      numeroDeBoleto: map['Número de Boleto'] ?? '',
+      formaDeCobranca: map['Forma de Cobrança'] ?? '',
+      dataVencimentoFatura: Timestamp.fromDate(
+          DateTime.parse(map['Data Vencimento Fatura'].split(" ")[0])),
+      valorFatura: double.tryParse(map['Valor Fatura']),
       dataEmissaoFatura: Timestamp.fromDate(DateTime.parse(
         "${map['Data Emissao Fatura'].toString().substring(6, 10)}-${map['Data Emissao Fatura'].toString().substring(3, 5)}-${map['Data Emissao Fatura'].toString().substring(0, 2)}",
       )),

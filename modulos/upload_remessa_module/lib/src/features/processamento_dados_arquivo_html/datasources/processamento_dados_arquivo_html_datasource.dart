@@ -17,6 +17,8 @@ class ProcessamentoDadosArquivoHtmlDatasource
               mapRemessa["arquivo"]["remessa"];
 
           final DateTime data = mapRemessa["arquivo"]["data da remessa"];
+          final String tipo = mapRemessa["arquivo"]["tipo do arquivo"];
+          print(tipo);
 
           if (listaBruta.isNotEmpty) {
             final remessa = RemessaModel(
@@ -24,6 +26,7 @@ class ProcessamentoDadosArquivoHtmlDatasource
               data: Timestamp.fromDate(data),
               upload: Timestamp.fromDate(DateTime.now()),
               remessa: await _processamentoBoleto(
+                tipoArquivo: tipo,
                 listaBruta: listaBruta,
               ),
             );
@@ -55,13 +58,20 @@ class ProcessamentoDadosArquivoHtmlDatasource
 
 Future<List<BoletoModel>> _processamentoBoleto({
   required List<Map<String, String>> listaBruta,
+  required String tipoArquivo,
 }) async {
   List<BoletoModel> boletos = [];
 
   if (listaBruta.isNotEmpty) {
     for (Map<String, String> boleto in listaBruta) {
-      BoletoModel model = BoletoModel.fromMapBase(boleto);
-      boletos.add(model);
+      if (tipoArquivo == "csv") {
+        BoletoModel model = BoletoModel.fromMapCsv(boleto);
+        boletos.add(model);
+      }
+      if (tipoArquivo == "xlsx") {
+        BoletoModel model = BoletoModel.fromMapXlsx(boleto);
+        boletos.add(model);
+      }
     }
     return boletos;
   } else {
