@@ -46099,7 +46099,7 @@ q=p.gm(p).a<=1080?new A.LU(new A.B8(c,s),s):s
 r=r.ch
 if(J.h(r.gm(r),2))r=A.a([],t.D)
 else{p=t.D
-r=J.h(r.gm(r),1)?A.a([new A.JI(this.gaaM(),20,s)],p):A.a([],p)}return A.aF4(new A.PN(new A.MT("Sistema Protocolos MOB","0.0.1",r,s),B.YA,s),A.ayy($.aS()).fy,A.hH(A.a([new A.jq(new A.a4_(this,a,c),s)],t.D),B.ab,B.W,B.a9,B.S),q,s)},
+r=J.h(r.gm(r),1)?A.a([new A.JI(this.gaaM(),20,s)],p):A.a([],p)}return A.aF4(new A.PN(new A.MT("Sistema Protocolos MOB","0.0.4",r,s),B.YA,s),A.ayy($.aS()).fy,A.hH(A.a([new A.jq(new A.a4_(this,a,c),s)],t.D),B.ab,B.W,B.a9,B.S),q,s)},
 F2(a){return A.Ah(B.mO,null,B.FC,null,new A.a3Z(this,a),B.M,null)},
 aaN(){$.a18().lT()},
 a97(a,b){var s=$.eD().CW
@@ -46144,7 +46144,7 @@ d=A
 c=A
 b=a
 s=3
-return A.G(A.ax_("https://cors-anywhere.herokuapp.com/https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02"),$async$vy)
+return A.G(A.ax_("https://firebasestorage.googleapis.com/v0/b/registro-protocolo-mob.appspot.com/o/modelo%2FBASE-PROTOCOLO-MOB.jpeg?alt=media&token=b1b1c610-1c66-4ad1-9754-d10f280aef02"),$async$vy)
 case 3:e.OJ(d.aEa(new c.a3U(p,b,a3),500,a0.PO(10,20,20,20)))
 j.OJ(A.aEa(new A.a3V(p,a),500,a0.PO(10,20,20,20)))
 q=j.bq(0)
