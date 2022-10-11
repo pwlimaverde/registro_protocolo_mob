@@ -1,3 +1,5 @@
+## [0.0.4] - 09/10/2022 
+Configuração hosting Firebase e CORS
 ## [0.0.3] - 09/10/2022 
 Configuração hosting Firebase
 ## [0.0.2] - 09/10/2022 
